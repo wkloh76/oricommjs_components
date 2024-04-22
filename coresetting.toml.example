@@ -1,0 +1,56 @@
+
+[webbackend]
+[webbackend.parser]
+json = { limit = "1mb" }
+urlencoded = { limit = "1mb", extended = true, parameterLimit = 2000 }
+raw = { limit = "10mb" }
+text = { limit = "1mb" }
+
+[webbackend.session]
+secret = "testing"
+path = "/index"
+httpOnly = true
+resave = false
+saveUninitialized = false
+cookie = { secure = false, maxAge = 1800000 }
+
+[webbackend.helmet]
+contentSecurityPolicy = { directives = { "script-src" = [
+  "'self'",
+  "example.com",
+] } }
+
+[window]
+title = ""
+icon = "link.png"
+toolbar = true
+frame = true
+width = 1280
+height = 720
+fullscreen = false
+resizetomonitor = false
+resizemonitorwidth = 50
+resizemonitorheight = 100
+resizable = true
+min_width = 800
+min_height = 640
+max_width = 1366
+max_height = 2160
+openDevTools = true
+position = "center"
+autoHideMenuBar = false
+useContentSize = true
+nodeIntegration = false
+contextIsolation = true
+webSecurity = true
+enableRemoteModule = false
+show = false
+url = ""
+page = ""
+el = "localapi"
+
+
+[production]
+remote = { cdn = "" }
+[debug]
+remote = { cdn = "" }
