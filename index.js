@@ -210,7 +210,8 @@ module.exports = (...args) => {
           components.done.push(setting.general.engine);
           if (!components.start) components.start = comp_engine.start;
           if (!components.routejson) components.routejson = { ...routejson };
-          else mergeDeep(components.routejson, routejson);
+          else
+            components.routejson = mergeDeep(components.routejson, routejson);
           return;
         } catch (error) {
           return errhandler(error);

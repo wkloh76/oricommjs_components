@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Move `src/coresetting.toml.example` to parent folder. Completed on 2024-04-22
 - Change `src/coresetting.toml.example` to parent folder. Completed on 2024-04-22
 - Change the design in `init,prepare_rules` functions in `index.js`. Completed on 2024-04-22
+- Apply newer `mergeDeep` function into `init` functions in `index.js`. Completed on 2024-04-23
 
 ### Deprecated
 
