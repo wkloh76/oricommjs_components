@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>
+    <%= it.title %>
+  </title>
+  <!-- Main styles for this application-->
+  <%~ include("sample/head.eta", {"remote": it.remote, "compname" : it.compname}) %>
+    <%~ include("sample/prescript.eta",{"remote": it.remote, "compname" : it.compname}) %>
+</head>
+
+<body>
+
+  <!--Header-->
+  <%~ include("sample/header.eta")%>
+
+    <!--Body-->
+    <%~ it.body %>
+
+      <!--Footer-->
+      <%~ include ("sample/footer.eta")%>
+
+        <!--Script-->
+        <%~ include("sample/script.eta")%>
+
+          <script src="<%= it.compname %>/web/lib/assets/js/preload.js"></script>
+</body>
+
+</html>

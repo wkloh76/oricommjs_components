@@ -1,0 +1,11 @@
+{
+  "r0": "auth_text",
+  "r1": "auth:end",
+  "r2": ":end",
+  "r3": "end",
+  "r4": "mystart:mystop",
+  "r5": "auth1-permit:combine-end",
+  "r10": "auth_json",
+  "r20": "auth_pass",
+  "r30": "auth_syserr"
+}

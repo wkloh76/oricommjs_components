@@ -21,13 +21,205 @@
 module.exports = (...args) => {
   return new Promise(async (resolve, reject) => {
     const [params, obj] = args;
-    const [pathname, curdir] = params;
+    const [prjsrc, compname] = params;
     const [library, sys, cosetting] = obj;
-    const { errhandler } = kernel.utils;
-    const { path } = sys;
+    const {
+      fs,
+      path: { join },
+    } = sys;
+    const {
+      engine: { deskelectron, webnodejs },
+      utils: { errhandler },
+    } = library;
+
     try {
-      let dir = path.join(pathname, "src");
-      resolve(await require(dir)([dir, curdir], obj));
+      let lib = {};
+      let { components } = library;
+
+      /**
+       * Define the workflow for each method in controller
+       * @alias module:src_index.pattern
+       * @param {...Object} args - 2 parameters
+       * @param {Array} args[0] - fn modules
+       * @param {Array} args[1] - services modules
+       * @returns
+       */
+      const pattern = (...args) => {
+        try {
+          let [fn, rules] = args;
+          let output,
+            idx = 0;
+
+          if (fn["rules"]) {
+            output = [];
+            let rule = rules.rule[fn["rules"]];
+            let check = /[:]/.test(rule);
+            let objname = {};
+            if (check) {
+              let cond = rule.split(":");
+              let chk_before = /[-]/.test(cond[0]);
+              let chk_after = /[-]/.test(cond[1]);
+              if (chk_before) {
+                let before = cond[0].split("-");
+                for (let brules of before) {
+                  objname[brules] = rules["module"][brules];
+                  output.push(objname);
+                  objname = {};
+                  idx += 1;
+                }
+              } else if (cond[0] != "") {
+                objname[cond[0]] = rules["module"][cond[0]];
+                output.push(objname);
+                objname = {};
+                idx += 1;
+              }
+
+              objname[fn["name"]] = fn["controller"];
+              output.push(objname);
+              objname = {};
+
+              if (chk_after) {
+                let after = cond[1].split("-");
+                for (let arules of after) {
+                  objname[arules] = rules["module"][arules];
+                  output.push(objname);
+                  objname = {};
+                }
+              } else if (cond[1] != "") {
+                objname[cond[1]] = rules["module"][cond[1]];
+                output.push(objname);
+                objname = {};
+              }
+            } else {
+              let chk_before = /[-]/.test(rule);
+              if (chk_before) {
+                let before = rule.split("-");
+                for (let brules of before) {
+                  objname[brules] = rules["module"][brules];
+                  output.push(objname);
+                  objname = {};
+                  idx += 1;
+                }
+              } else {
+                objname[rule] = rules["module"][rule];
+                output.push(objname);
+                objname = {};
+                idx += 1;
+              }
+              objname[fn["name"]] = fn["controller"];
+              output.push(objname);
+              objname = {};
+            }
+          } else {
+            output = [];
+            let objname = {};
+            objname[fn["name"]] = fn["controller"];
+            output.push(objname);
+          }
+
+          return [output, idx];
+        } catch (error) {
+          throw Error(error);
+        }
+      };
+
+      /**
+       * Define the workflow for each method in controller
+       * @alias module:src_index.prepare_rules
+       * @param {...Object} args - 1 parameters
+       * @param {Array} args[0].api - api modules
+       * @param {Array} args[0].gui - gui modules
+       * @param {Array} args[0].rules - services modules
+       * @returns
+       */
+      const prepare_rules = (...args) => {
+        return new Promise(async (resolve, reject) => {
+          try {
+            let [{ api, gui, rules }] = args;
+
+            for (let [key] of Object.entries(api)) {
+              let [controller, idx] = pattern(api[key], rules);
+              api[key]["controller"] = controller;
+              api[key]["idx"] = idx;
+            }
+
+            for (let [key] of Object.entries(gui)) {
+              let [controller, idx] = pattern(gui[key], rules);
+              gui[key]["controller"] = controller;
+              gui[key]["idx"] = idx;
+            }
+
+            let routedoc = {
+              api: { ...api },
+              gui: { ...gui },
+              rules: { ...rules },
+            };
+
+            resolve(routedoc);
+          } catch (error) {
+            return errhandler(error);
+          }
+        });
+      };
+
+      /**
+       * Initialize
+       * @alias module:src_index.init
+       * @returns
+       */
+      const init = async (...args) => {
+        try {
+          let [setting, mergeDeep] = args;
+          let initialurl = JSON.parse(
+            fs.readFileSync(join(prjsrc, "default.json"), "utf8")
+          );
+          let comp_engine = library.engine[setting.general.engine.name];
+
+          setting.share = {};
+          setting.share[`/${compname}/public`] = join(prjsrc, "src", "public");
+          if (!setting.share[`/atomic`])
+            setting.share[`/atomic`] = join(library.dir, "atomic");
+
+          for (let item of ["common", "services", "api", "gui", "rules"]) {
+            components[compname] = {
+              ...components[compname],
+              ...(await library.utils.import_cjs(
+                [join(prjsrc, "src"), [item], compname],
+                library.utils
+              )),
+            };
+          }
+          let routejson = await prepare_rules(components[compname]);
+          let dataset = {};
+          dataset[compname] = components[compname];
+
+          if (!setting.ongoing.internalurl) setting.ongoing.internalurl = {};
+          setting.ongoing.internalurl[
+            `${compname}`
+          ] = `/${compname}/public/assets`;
+
+          comp_engine.config(dataset, compname, setting.general.engine);
+          setting.ongoing.initialurl = initialurl[setting.general.engine.type];
+
+          let less = `@remote: "${setting.ongoing.remote.cdn}";@internal: "/${compname}/public/assets";`;
+          fs.writeFileSync(
+            join(prjsrc, "src", "public", "assets", "less", "config.less"),
+            less,
+            { encoding: "utf8" }
+          );
+          components.done.push(setting.general.engine);
+          if (!components.start) components.start = comp_engine.start;
+          if (!components.routejson) components.routejson = { ...routejson };
+          else mergeDeep(components.routejson, routejson);
+          return;
+        } catch (error) {
+          return errhandler(error);
+        }
+      };
+
+      let error = await init(cosetting, library.utils.mergeDeep);
+      if (error) throw error;
+      resolve(lib);
     } catch (error) {
       reject(errhandler(error));
     }
