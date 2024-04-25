@@ -20,12 +20,13 @@
  */
 module.exports = (...args) => {
   return new Promise(async (resolve, reject) => {
-    const [params, obj] = args;
+    let [params, obj] = args;
     const [prjsrc, compname] = params;
-    const [library, sys, cosetting] = obj;
+    let [library, sys, cosetting] = obj;
     const {
       fs,
       path: { join },
+      toml,
     } = sys;
     const {
       engine: { deskelectron, webnodejs },
@@ -170,6 +171,21 @@ module.exports = (...args) => {
       const init = async (...args) => {
         try {
           let [setting, mergeDeep] = args;
+          let output = { code: 0, msg: "", data: null };
+
+          let tomlpath = join(prjsrc, "coresetting.toml");
+
+          if (fs.existsSync(tomlpath)) {
+            let psetting = toml.parse(fs.readFileSync(tomlpath), {
+              bigint: false,
+            });
+            let mode = setting.args.mode;
+            let { debug, production, ...settingtmp } = psetting;
+            setting = mergeDeep(setting, settingtmp);
+            setting[mode] = mergeDeep(setting[mode], psetting[mode]);
+            setting["ongoing"] = mergeDeep(setting["ongoing"], psetting[mode]);
+          }
+          // cosetting = { ...cosetting, ...setting };
           let initialurl = JSON.parse(
             fs.readFileSync(join(prjsrc, "default.json"), "utf8")
           );
@@ -185,7 +201,8 @@ module.exports = (...args) => {
               ...components[compname],
               ...(await library.utils.import_cjs(
                 [join(prjsrc, "src"), [item], compname],
-                library.utils
+                library.utils,
+                [library, sys, setting]
               )),
             };
           }
@@ -198,7 +215,7 @@ module.exports = (...args) => {
             `${compname}`
           ] = `/${compname}/public/assets`;
 
-          comp_engine.config(dataset, compname, setting.general.engine);
+          comp_engine.register(dataset, compname, setting.general.engine);
           setting.ongoing.initialurl = initialurl[setting.general.engine.type];
 
           let less = `@remote: "${setting.ongoing.remote.cdn}";@internal: "/${compname}/public/assets";`;
@@ -212,15 +229,16 @@ module.exports = (...args) => {
           if (!components.routejson) components.routejson = { ...routejson };
           else
             components.routejson = mergeDeep(components.routejson, routejson);
-          return;
+          output.data = setting;
+          return output;
         } catch (error) {
           return errhandler(error);
         }
       };
 
-      let error = await init(cosetting, library.utils.mergeDeep);
-      if (error) throw error;
-      resolve(lib);
+      let rtninit = await init(cosetting, library.utils.mergeDeep);
+      if (rtninit.code !== 0) throw rtninit;
+      resolve(rtninit.data);
     } catch (error) {
       reject(errhandler(error));
     }

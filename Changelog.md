@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Create sample package.json.example which allow user self install node modules to components. Completed on 2024-04-22
+- Return coresetting after init from index.js done. Completed on 2024-04-25
 
 ### Changed
 

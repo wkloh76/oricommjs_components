@@ -40,7 +40,8 @@ module.exports = (...args) => {
       let arr_modname = dir_module(pathname, excludefile);
       let arr_modules = await import_cjs(
         [pathname, arr_modname, compname],
-        library.utils
+        library.utils,
+        [library, sys, cosetting]
       );
       for (let [modname, module] of Object.entries(arr_modules)) {
         for (let [module_key, module_val] of Object.entries(module)) {

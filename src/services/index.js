@@ -29,7 +29,11 @@ module.exports = (...args) => {
       let lib = {};
 
       let arr_modname = dir_module(pathname, excludefile);
-      lib = await import_cjs([pathname, arr_modname, compname], library.utils);
+      lib = await import_cjs([pathname, arr_modname, compname], library.utils, [
+        library,
+        sys,
+        cosetting,
+      ]);
 
       resolve(lib);
     } catch (error) {

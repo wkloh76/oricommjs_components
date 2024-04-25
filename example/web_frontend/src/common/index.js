@@ -15,8 +15,8 @@
  */
 "use strict";
 /**
- * Handle access right for the controller before and after
- * @module src_rules_index
+ * The common modules apply to anywhere
+ * @module src_common_index
  */
 module.exports = (...args) => {
   return new Promise(async (resolve, reject) => {
@@ -26,21 +26,10 @@ module.exports = (...args) => {
     const { dir_module, import_cjs, errhandler } = library.utils;
     const { excludefile } = cosetting.general;
     try {
-      const { fs, path } = sys;
-      let lib = { rule: {} };
-      let rulespath = path.join(pathname, "rule.json");
-      let arr_modname = dir_module(pathname, excludefile);
-      let modules = await import_cjs(
-        [pathname, arr_modname, compname],
-        library.utils,
-        [library, sys, cosetting]
-      );
-      for (let [, val] of Object.entries(modules)) {
-        lib["module"] = { ...lib["module"], ...val };
-      }
+      let lib = {};
 
-      if (fs.existsSync(rulespath))
-        lib["rule"] = JSON.parse(fs.readFileSync(rulespath));
+      let arr_modname = dir_module(pathname, excludefile);
+      // lib = await import_cjs([pathname, arr_modname, compname], library.utils);
 
       resolve(lib);
     } catch (error) {

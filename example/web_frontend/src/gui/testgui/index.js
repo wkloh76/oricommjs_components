@@ -10,6 +10,7 @@ module.exports = (...args) => {
     const [library, sys, cosetting] = obj;
 
     let {
+      dir,
       components,
       utils: { handler },
     } = library;
@@ -21,21 +22,87 @@ module.exports = (...args) => {
       remote: { cdn, apiserver, wsserver },
     } = cosetting.ongoing;
 
+    let compath = path.join(dir, "components", compname, "src");
+    let commonviews = path.join(compath, "common", "views");
     let testnoapi = require("./testgui")(params, obj);
 
-    GET[`@eta/dashboard/text|r0`] = (...args) => {
+    GET[`@test/dashboard/text|r0`] = (...args) => {
       let [request, response] = args;
       try {
-        let { render } = response;
+        let {
+          render: {
+            options: { css, elcontent, js, layer, less, params },
+          },
+          render: renderer,
+        } = response;
+        renderer.view = `${pathname}/index.html`;
+        layer.layouts = path.join(commonviews, "sample.html");
+        layer.childs = {
+          path: path.join(commonviews, "sample"),
+          excluded: [
+            "head.html",
+            "header.html",
+            "prescript.html",
+            "script.html",
+          ],
+        };
 
-        render["view"] = `${pathname}/index.eta`;
-        render.options["layer"] = path.join(
-          kernel.dir,
-          "components",
-          layouts.sample
-        );
-        render.options["params"] = {
-          title: "Test Graphic User Interface",
+        elcontent.title = "Test Graphic User Interface with rule 0";
+        params.remotely = cdn;
+        params.locally = `/${compname}`;
+        css.remotely = ["/npm/uikit%403.18.3/dist/css/uikit-rtl.min.css"];
+        js.remotely = [
+          "/npm/uikit@3.18.3/dist/js/uikit.min.js",
+          "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
+        ];
+        less.engine = {
+          domain: "remotely",
+          location: "/npm/less@4.2.0/dist/less.min.js",
+        };
+        less.style.locally = ["/public/assets/less/wi.less"];
+
+        return response;
+      } catch (error) {
+        response.err.error = error.message;
+        return response;
+      }
+    };
+    GET[`@test-dashboard-json|r10`] = (...args) => {
+      let [request, response] = args;
+      try {
+        let {
+          render: {
+            options: { css, elcontent, js, layer, less, mjs, params },
+          },
+          render: renderer,
+        } = response;
+        renderer.view = `${pathname}/index.html`;
+        layer.layouts = path.join(commonviews, "sample.html");
+        layer.childs = {
+          path: path.join(commonviews, "sample"),
+          excluded: [
+            "head.html",
+            "header.html",
+            "prescript.html",
+            "script.html",
+          ],
+        };
+
+        elcontent.title = "Test Graphic User Interface with rule 10";
+        params.remotely = cdn;
+        params.locally = `/${compname}`;
+        css.remotely = ["/npm/uikit%403.18.3/dist/css/uikit-rtl.min.css"];
+        js.remotely = [
+          "/npm/uikit@3.18.3/dist/js/uikit.min.js",
+          "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
+        ];
+        less.engine = {
+          domain: "remotely",
+          location: "/npm/less@4.2.0/dist/less.min.js",
+        };
+        less.style.locally = ["/public/assets/less/wi.less"];
+
+        mjs = {
           jslib: JSON.stringify({}),
         };
 
@@ -45,127 +112,190 @@ module.exports = (...args) => {
         return response;
       }
     };
-    GET[`@eta-dashboard-json|r10`] = (...args) => {
+    GET[`@test-dashboard-pass|r4`] = (...args) => {
       let [request, response] = args;
       try {
-        let { render } = response;
+        let {
+          render: {
+            options: { css, elcontent, js, layer, less, params },
+          },
+          render: renderer,
+        } = response;
+        renderer.view = `${pathname}/index.html`;
+        layer.layouts = path.join(commonviews, "sample.html");
+        layer.childs = {
+          path: path.join(commonviews, "sample"),
+          excluded: [
+            "head.html",
+            "header.html",
+            "prescript.html",
+            "script.html",
+          ],
+        };
 
-        render["view"] = `${pathname}/index.eta`;
-        render.options["layer"] = path.join(
-          kernel.dir,
-          "components",
-          layouts.sample
-        );
-        render.options["params"] = {
-          title: "Test Graphic User Interface",
+        elcontent.title = "Test Graphic User Interface with rule 4";
+        params.remotely = cdn;
+        params.locally = `/${compname}`;
+        css.remotely = ["/npm/uikit%403.18.3/dist/css/uikit-rtl.min.css"];
+        js.remotely = [
+          "/npm/uikit@3.18.3/dist/js/uikit.min.js",
+          "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
+        ];
+        less.engine = {
+          domain: "remotely",
+          location: "/npm/less@4.2.0/dist/less.min.js",
+        };
+        less.style.locally = ["/public/assets/less/wi.less"];
+
+        return response;
+      } catch (error) {
+        response.err.error = error.message;
+        return response;
+      }
+    };
+    GET[`dashboard-pass`] = (...args) => {
+      let [request, response] = args;
+      try {
+        let {
+          render: {
+            options: { elcontent, params },
+          },
+          render: renderer,
+        } = response;
+        renderer.view = `${pathname}/index1.html`;
+        elcontent.title = "Test Graphic User Interface";
+        params.remotely = cdn;
+        params.locally = `/${compname}`;
+
+        return response;
+      } catch (error) {
+        response.err.error = error.message;
+        return response;
+      }
+    };
+
+    GET[`dashboard-layout-pass`] = (...args) => {
+      let [request, response] = args;
+      try {
+        let {
+          render: {
+            options: { css, elcontent, js, layer, less, params },
+          },
+          render: renderer,
+        } = response;
+        renderer.view = `${pathname}/index.html`;
+        layer.layouts = path.join(commonviews, "sample.html");
+        layer.childs = {
+          path: path.join(commonviews, "sample"),
+          excluded: [
+            "head.html",
+            "header.html",
+            "prescript.html",
+            "script.html",
+          ],
+        };
+
+        elcontent.title = "Test Graphic User Interface";
+        params.remotely = cdn;
+        params.locally = `/${compname}`;
+        css.remotely = ["/npm/uikit%403.18.3/dist/css/uikit-rtl.min.css"];
+        js.remotely = [
+          "/npm/uikit@3.18.3/dist/js/uikit.min.js",
+          "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
+        ];
+        less.engine = {
+          domain: "remotely",
+          location: "/npm/less@4.2.0/dist/less.min.js",
+        };
+        less.style.locally = ["/public/assets/less/wi.less"];
+
+        return response;
+      } catch (error) {
+        response.err.error = error.message;
+        return response;
+      }
+    };
+
+    GET[`@test/dashboard/syserr|r30`] = (...args) => {
+      let [request, response] = args;
+      try {
+        let {
+          render: {
+            options: { css, elcontent, js, layer, less, mjs, params },
+          },
+          render: renderer,
+        } = response;
+        renderer.view = `${pathname}/index.html`;
+        layer.layouts = path.join(commonviews, "sample.html");
+        layer.childs = {
+          path: path.join(commonviews, "sample"),
+          excluded: [
+            "head.html",
+            "header.html",
+            "prescript.html",
+            "script.html",
+          ],
+        };
+
+        elcontent.title = "Test Graphic User Interface with rule 30";
+        params.remotely = cdn;
+        params.locally = `/${compname}`;
+        css.remotely = ["/npm/uikit%403.18.3/dist/css/uikit-rtl.min.css"];
+        js.remotely = [
+          "/npm/uikit@3.18.3/dist/js/uikit.min.js",
+          "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
+        ];
+        less.engine = {
+          domain: "remotely",
+          location: "/npm/less@4.2.0/dist/less.min.js",
+        };
+        less.style.locally = ["/public/assets/less/wi.less"];
+
+        mjs = {
           jslib: JSON.stringify({}),
         };
-
-        return response;
       } catch (error) {
         response.err.error = error.message;
         return response;
       }
     };
-    GET[`@eta-dashboard-pass|r4`] = (...args) => {
+
+    GET[`dashboard|r1`] = (...args) => {
       let [request, response] = args;
       try {
-        let { render } = response;
-
-        render["view"] = `${pathname}/index.eta`;
-        render.options["layer"] = path.join(
-          kernel.dir,
-          "components",
-          layouts.sample
-        );
-        render.options["params"] = {
-          title: "Test Graphic User Interface",
-          // jscss: JSON.stringify({
-          //   internal: {
-          //     js: {
-          //       url: "/web/lib/assets/js/",
-          //       lists: ["model/sample"],
-          //     },
-          //     css: {
-          //       url: "/web/lib/assets/css/",
-          //       lists: ["404"],
-          //     },
-          //   },
-          //   external: {
-          //     js: {
-          // url: "/web/lib/assets/js/",
-          // lists: ["/plugin/toolbox/cbtoolbox"],
-          // loads: ["/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min"],
-          //     },
-          //   },
-          // initialize: {
-          //     methods: ["testing.test"],
-          //     argv: [["welcome", "vsrnd"]],
-          // },
-          // }),
+        let {
+          render: {
+            options: { css, elcontent, js, layer, less, mjs, params },
+          },
+          render: renderer,
+        } = response;
+        renderer.view = `${pathname}/index.html`;
+        layer.layouts = path.join(commonviews, "sample.html");
+        layer.childs = {
+          path: path.join(commonviews, "sample"),
+          excluded: [
+            "head.html",
+            "header.html",
+            "prescript.html",
+            "script.html",
+          ],
         };
 
-        return response;
-      } catch (error) {
-        response.err.error = error.message;
-        return response;
-      }
-    };
-    GET[`eta-dashboard-pass`] = (...args) => {
-      let [request, response] = args;
-      try {
-        let { render } = response;
-
-        render["view"] = `${pathname}/index1.html`;
-
-        render.options["params"] = {
-          title: "Test Graphic User Interface",
-          remote: cdn,
-          compname: compname,
+        elcontent.title = "Test Graphic User Interface with rule 1";
+        params.remotely = cdn;
+        params.locally = `/${compname}`;
+        css.remotely = ["/npm/uikit%403.18.3/dist/css/uikit-rtl.min.css"];
+        js.remotely = [
+          "/npm/uikit@3.18.3/dist/js/uikit.min.js",
+          "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
+        ];
+        less.engine = {
+          domain: "remotely",
+          location: "/npm/less@4.2.0/dist/less.min.js",
         };
+        less.style.locally = ["/public/assets/less/wi.less"];
 
-        return response;
-      } catch (error) {
-        response.err.error = error.message;
-        return response;
-      }
-    };
-    GET[`@eta/dashboard/syserr|r30`] = (...args) => {
-      let [request, response] = args;
-      try {
-        let { render } = response;
-
-        render["view"] = `${pathname}/index.eta`;
-        render.options["layer"] = path.join(
-          kernel.dir,
-          "components",
-          layouts.sample
-        );
-        render.options["params"] = {
-          title: "Test Graphic User Interface",
-          jslib: JSON.stringify({}),
-        };
-
-        return response;
-      } catch (error) {
-        response.err.error = error.message;
-        return response;
-      }
-    };
-
-    GET[`eta-dashboard|r1`] = (...args) => {
-      let [request, response] = args;
-      try {
-        let { render } = response;
-
-        render["view"] = `${pathname}/index.ejs`;
-        render.options["layer"] = path.join(
-          kernel.dir,
-          "components",
-          layouts.sample
-        );
-        render.options["params"] = {
-          title: "Test Graphic User Interface",
+        mjs = {
           jscss: JSON.stringify({}),
         };
 
@@ -177,7 +307,7 @@ module.exports = (...args) => {
     };
 
     POST["test-json"] = async (...args) => {
-      let [request, response, gift] = args;
+      let [request, response] = args;
       try {
         let { render } = response;
 
