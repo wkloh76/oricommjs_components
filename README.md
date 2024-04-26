@@ -1,6 +1,9 @@
 # OriCommJS_Components
 
-- This is a user playground for users to design web servers, desktop applications and system back-end services.
+![Static Badge](https://img.shields.io/badge/License-Mulan_PSL_v2-_)
+![Static Badge](https://img.shields.io/badge/Framework-OriCommJS-_)
+
+This is a user playground for users to design web servers, desktop applications, and non-GUI applications.
 
 ## Objective
 
@@ -9,68 +12,89 @@
 - Not encourge direcly import third party node module such from npm,yarn npx and etc to this components. User should build their modules which allow import the third party node modules.
 - Mainly the concept of modular design management, which is the responsibility of Atomic Domain. The main task of the component side is to call functions directly from atomic and engine.
 
-## Reference
-
-- `Electron handle cors` - https://pratikpc.medium.com/bypassing-cors-with-electron-ab7eaf331605
-
 ## Startup
 
-1. For web server design,copy data as below and paste to your local coresetting.toml.
+### Setup
+
+1. Download the project and copy to oricommjs->components folder.
+2. Rename the project and add prefix show as below:
+
+   - `app_` for non-GUI application.
+   - `web_` for web application.
+   - `desktop_` for desktop application.
+
+3. copy `default.json.example` file and rename to `default.json` and enter the default url.
+
+4. For web server design,copy `coresetting.toml.example.web` file and rename to `coresetting.toml` The content show as below:
 
 ```
-  [webbackend]
-[webbackend.parser]
+[webnodejs]
+[webnodejs.parser]
 json = { limit = "1mb" }
 urlencoded = { limit = "1mb", extended = true, parameterLimit = 2000 }
 raw = { limit = "10mb" }
 text = { limit = "1mb" }
 
-[webbackend.session]
-secret = "testing"
+[webnodejs.session]
+secret = "WKLOH"
 path = "/index"
 httpOnly = true
 resave = false
 saveUninitialized = false
 cookie = { secure = false, maxAge = 1800000 }
 
-[webbackend.helmet]
+[webnodejs.helmet]
 contentSecurityPolicy = { directives = { "script-src" = [
   "'self'",
   "example.com",
 ] } }
+
+[production]
+remote = { cdn = "" }
+[debug]
+remote = { cdn = "" }
 ```
 
-2. For desktop application design,copy data as below and paste to your local coresetting.toml.
+5. For desktop application design,copy `coresetting.toml.example.desktop` file and rename to `coresetting.toml` The content show as below:
 
 ```
-  [window]
-  title = ""
-  icon = "link.png"
-  toolbar = true
-  frame = true
-  width = 1280
-  height = 720
-  fullscreen = false
-  resizetomonitor = false
-  resizemonitorwidth = 50
-  resizemonitorheight = 100
-  resizable = true
-  min_width = 800
-  min_height = 640
-  max_width = 1366
-  max_height = 2160
-  openDevTools = true
-  position = "center"
-  autoHideMenuBar = false
-  useContentSize = true
-  nodeIntegration = false
-  contextIsolation = true
-  webSecurity = true
-  enableRemoteModule = false
-  show = false
-  url = ""
-  page = ""
-  el = "localapi"
+[window]
+title = ""
+icon = "link.png"
+toolbar = true
+frame = true
+width = 1280
+height = 720
+fullscreen = false
+resizetomonitor = false
+resizemonitorwidth = 50
+resizemonitorheight = 100
+resizable = true
+min_width = 800
+min_height = 640
+max_width = 1366
+max_height = 2160
+openDevTools = true
+position = "center"
+autoHideMenuBar = false
+useContentSize = true
+nodeIntegration = false
+contextIsolation = true
+webSecurity = true
+enableRemoteModule = false
+show = false
+url = ""
+page = ""
+el = "localapi"
+
+[production]
+remote = { cdn = "" }
+[debug]
+remote = { cdn = "" }
+
 ```
 
-2. Set the first url show to the application, rename `src/default.json.example` to `src/default.json` and enter the url.
+# Status
+
+- Web server -- tested with webnodejs.
+- Desktop Application -- not finish yet
