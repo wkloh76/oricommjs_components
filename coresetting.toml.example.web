@@ -22,4 +22,4 @@ contentSecurityPolicy = { directives = { "script-src" = [
 [production]
 remote = { cdn = "" }
 [debug]
-remote = { cdn = "" }
+remote = { cdn = "https://cdn.jsdelivr.net" }

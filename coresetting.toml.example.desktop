@@ -30,4 +30,4 @@ el = "localapi"
 [production]
 remote = { cdn = "" }
 [debug]
-remote = { cdn = "" }
+remote = { cdn = "https://cdn.jsdelivr.net" }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023   Loh Wah Kiang at V.S. Industry Berhad 2RD
+ * Copyright (c) 2024   Loh Wah Kiang
  *
  * openGauss is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
@@ -101,7 +101,7 @@ module.exports = (...args) => {
                   objname = {};
                   idx += 1;
                 }
-              } else {
+              } else if (rule) {
                 objname[rule] = rules["module"][rule];
                 output.push(objname);
                 objname = {};

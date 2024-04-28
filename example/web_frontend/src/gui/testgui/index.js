@@ -50,7 +50,7 @@ module.exports = (...args) => {
         elcontent.title = "Test Graphic User Interface with rule 0";
         params.remotely = cdn;
         params.locally = `/${compname}`;
-        css.remotely = ["/npm/uikit%403.18.3/dist/css/uikit-rtl.min.css"];
+        css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];
         js.remotely = [
           "/npm/uikit@3.18.3/dist/js/uikit.min.js",
           "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
@@ -91,7 +91,7 @@ module.exports = (...args) => {
         elcontent.title = "Test Graphic User Interface with rule 10";
         params.remotely = cdn;
         params.locally = `/${compname}`;
-        css.remotely = ["/npm/uikit%403.18.3/dist/css/uikit-rtl.min.css"];
+        css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];
         js.remotely = [
           "/npm/uikit@3.18.3/dist/js/uikit.min.js",
           "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
@@ -136,7 +136,7 @@ module.exports = (...args) => {
         elcontent.title = "Test Graphic User Interface with rule 4";
         params.remotely = cdn;
         params.locally = `/${compname}`;
-        css.remotely = ["/npm/uikit%403.18.3/dist/css/uikit-rtl.min.css"];
+        css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];
         js.remotely = [
           "/npm/uikit@3.18.3/dist/js/uikit.min.js",
           "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
@@ -188,7 +188,6 @@ module.exports = (...args) => {
         layer.childs = {
           path: path.join(commonviews, "sample"),
           excluded: [
-            "head.html",
             "header.html",
             "prescript.html",
             "script.html",
@@ -198,7 +197,7 @@ module.exports = (...args) => {
         elcontent.title = "Test Graphic User Interface";
         params.remotely = cdn;
         params.locally = `/${compname}`;
-        css.remotely = ["/npm/uikit%403.18.3/dist/css/uikit-rtl.min.css"];
+        css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];
         js.remotely = [
           "/npm/uikit@3.18.3/dist/js/uikit.min.js",
           "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
@@ -240,7 +239,7 @@ module.exports = (...args) => {
         elcontent.title = "Test Graphic User Interface with rule 30";
         params.remotely = cdn;
         params.locally = `/${compname}`;
-        css.remotely = ["/npm/uikit%403.18.3/dist/css/uikit-rtl.min.css"];
+        css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];
         js.remotely = [
           "/npm/uikit@3.18.3/dist/js/uikit.min.js",
           "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
@@ -284,7 +283,7 @@ module.exports = (...args) => {
         elcontent.title = "Test Graphic User Interface with rule 1";
         params.remotely = cdn;
         params.locally = `/${compname}`;
-        css.remotely = ["/npm/uikit%403.18.3/dist/css/uikit-rtl.min.css"];
+        css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];
         js.remotely = [
           "/npm/uikit@3.18.3/dist/js/uikit.min.js",
           "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",

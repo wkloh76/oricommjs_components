@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2024-04-27
+
+### Summary
+
+- Only can apply to OriCommJS/components 1.0.1 and above.
+
+### Added
+
+- Add `rule.json` file to rules folder. Completed on 2024-04-27
+
+### Changed
+
+- Update the example code. Completed on 2024-04-27
+- Update `coresetting.toml.example.web`. Completed on 2024-04-27
+- Update `coresetting.toml.example.desktop`. Completed on 2024-04-27
+
+### Deprecated
+
+### Removed
+
+- Remove some file from common vies folder. Completed on 2024-04-27
+
+### Fixed
+
+- Fix bug `pattern` function at `index.js`. Completed on 2024-04-27
+
+### Security
+
+[1.0.1]: https://github.com/wkloh76/oricommjs_components/releases/tag/1.0.1
+
 ## [1.0.0] - 2024-04-14
 
 ### Summary
@@ -34,4 +64,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-<!-- [1.0.0]:  -->
+[1.0.0]: https://github.com/wkloh76/oricommjs_components/releases/tag/1.0.0
