@@ -8,13 +8,13 @@ module.exports = (...args) => {
     const [params, obj] = args;
     const [pathname, curdir, compname] = params;
     const [library, sys, cosetting] = obj;
-
-    const {
-      components,
-      utils: { handler, renameObjectKeys },
-    } = library;
-    const { fs, path } = sys;
     try {
+      let {
+        components,
+        utils: { handler, renameObjectKeys },
+      } = library;
+      let { fs, path } = sys;
+
       let lib = handler.restfulapi;
       let { DELETE, HEAD, GET, PATCH, POST, PUT } = lib;
 
