@@ -37,6 +37,11 @@ module.exports = (...args) => {
           } = response;
           renderer.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
+          layer.params = {
+            title: "Test Graphic User Interface with rule 0",
+            remotely: cdn,
+            locally: `/${compname}`,
+          };
           layer.childs = {
             path: path.join(commonviews, "sample"),
             excluded: [
@@ -47,7 +52,6 @@ module.exports = (...args) => {
             ],
           };
 
-          elcontent.title = "Test Graphic User Interface with rule 0";
           params.remotely = cdn;
           params.locally = `/${compname}`;
           css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];
@@ -78,6 +82,11 @@ module.exports = (...args) => {
           } = response;
           renderer.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
+          layer.params = {
+            title: "Test Graphic User Interface with rule 10",
+            remotely: cdn,
+            locally: `/${compname}`,
+          };
           layer.childs = {
             path: path.join(commonviews, "sample"),
             excluded: [
@@ -88,7 +97,6 @@ module.exports = (...args) => {
             ],
           };
 
-          elcontent.title = "Test Graphic User Interface with rule 10";
           params.remotely = cdn;
           params.locally = `/${compname}`;
           css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];
@@ -123,6 +131,11 @@ module.exports = (...args) => {
           } = response;
           renderer.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
+          layer.params = {
+            title: "Test Graphic User Interface with rule 4",
+            remotely: cdn,
+            locally: `/${compname}`,
+          };
           layer.childs = {
             path: path.join(commonviews, "sample"),
             excluded: [
@@ -133,7 +146,6 @@ module.exports = (...args) => {
             ],
           };
 
-          elcontent.title = "Test Graphic User Interface with rule 4";
           params.remotely = cdn;
           params.locally = `/${compname}`;
           css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];
@@ -185,12 +197,16 @@ module.exports = (...args) => {
           } = response;
           renderer.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
+          layer.params = {
+            title: "Test Graphic User Interface",
+            remotely: cdn,
+            locally: `/${compname}`,
+          };
           layer.childs = {
             path: path.join(commonviews, "sample"),
             excluded: ["header.html", "prescript.html", "script.html"],
           };
 
-          elcontent.title = "Test Graphic User Interface";
           params.remotely = cdn;
           params.locally = `/${compname}`;
           css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];
@@ -222,6 +238,11 @@ module.exports = (...args) => {
           } = response;
           renderer.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
+          layer.params = {
+            title: "Test Graphic User Interface with rule 30",
+            remotely: cdn,
+            locally: `/${compname}`,
+          };
           layer.childs = {
             path: path.join(commonviews, "sample"),
             excluded: [
@@ -232,7 +253,6 @@ module.exports = (...args) => {
             ],
           };
 
-          elcontent.title = "Test Graphic User Interface with rule 30";
           params.remotely = cdn;
           params.locally = `/${compname}`;
           css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];
@@ -266,6 +286,11 @@ module.exports = (...args) => {
           } = response;
           renderer.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
+          layer.params = {
+            title: "Test Graphic User Interface with rule 1",
+            remotely: cdn,
+            locally: `/${compname}`,
+          };
           layer.childs = {
             path: path.join(commonviews, "sample"),
             excluded: [
@@ -276,7 +301,6 @@ module.exports = (...args) => {
             ],
           };
 
-          elcontent.title = "Test Graphic User Interface with rule 1";
           params.remotely = cdn;
           params.locally = `/${compname}`;
           css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];

@@ -9,13 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Summary
 
-- Only can apply to OriCommJS/components 1.0.1 and above.
-
 ### Added
 
 ### Changed
 
-- Update example. Completed on 2024-04-29
+- Update example and only can apply to OriCommJS 1.0.1 and 1.0.2. Completed on 2024-04-29
+- Update example only can apply to OriCommJS 1.0.3 and above. Completed on 2024-05-01
 
 ### Deprecated
 
