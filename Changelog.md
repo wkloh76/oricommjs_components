@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add a render main page if `default.json` assign the url. Completed on 2024-05-01
+- Add a render main page if `default.json` assign the url. Completed on 2024-05-02
 
 ### Changed
 
