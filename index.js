@@ -215,6 +215,8 @@ module.exports = (...args) => {
             `${compname}`
           ] = `/${compname}/public/assets`;
 
+          dataset[compname].defaulturl =
+            initialurl[setting.general.engine.type];
           comp_engine.register(dataset, compname, setting.general.engine);
           setting.ongoing.initialurl = initialurl[setting.general.engine.type];
 
