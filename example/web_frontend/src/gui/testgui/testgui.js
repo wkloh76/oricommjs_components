@@ -13,7 +13,7 @@ module.exports = (...args) => {
 
   lib.testjson = (input) => {
     return new Promise(async (resolve, reject) => {
-      var output = handler.dataformat2;
+      var output = handler.dataformat2();
       try {
         let test = handler.getprm(input.data.req);
         output.data = {};
