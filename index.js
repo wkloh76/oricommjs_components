@@ -185,7 +185,7 @@ module.exports = (...args) => {
             setting[mode] = mergeDeep(setting[mode], psetting[mode]);
             setting["ongoing"] = mergeDeep(setting["ongoing"], psetting[mode]);
           }
-          // cosetting = { ...cosetting, ...setting };
+
           let initialurl = JSON.parse(
             fs.readFileSync(join(prjsrc, "default.json"), "utf8")
           );

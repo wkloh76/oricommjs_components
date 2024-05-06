@@ -15,7 +15,7 @@ module.exports = (...args) => {
       } = library;
       let { fs, path } = sys;
 
-      let lib = handler.restfulapi();
+      let lib = handler.restfulapi;
       let { DELETE, HEAD, GET, PATCH, POST, PUT } = lib;
 
       POST["testjson"] = async (...args) => {
@@ -23,7 +23,7 @@ module.exports = (...args) => {
         try {
           let { render } = response;
 
-          let input = handler.dataformat2();
+          let input = handler.dataformat;
           input.data = {
             req: request,
           };

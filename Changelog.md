@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add new example. Completed on 2024-05-06
+
 ### Changed
 
 - Update example. Completed on 2024-05-04
@@ -20,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 
 ### Removed
+
+- Remove unused comment from `index.js`. Completed on 2024-05-06
 
 ### Fixed
 

@@ -16,7 +16,7 @@ module.exports = (...args) => {
       } = library;
       let { fs, path } = sys;
       // let { layouts } = components[compname];
-      let lib = handler.restfulapi();
+      let lib = handler.restfulapi;
       let { DELETE, HEAD, GET, PATCH, POST, PUT } = lib;
       let {
         remote: { cdn, apiserver, wsserver },
@@ -330,7 +330,7 @@ module.exports = (...args) => {
         try {
           let { render } = response;
 
-          let input = handler.dataformat2();
+          let input = handler.dataformat;
           input.data = {
             req: request,
           };
