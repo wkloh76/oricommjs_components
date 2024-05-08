@@ -59,11 +59,9 @@ module.exports = (...args) => {
             "/npm/uikit@3.18.3/dist/js/uikit.min.js",
             "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
           ];
-          less.engine = {
-            domain: "remotely",
-            location: "/npm/less@4.2.0/dist/less.min.js",
-          };
-          less.style.locally = ["/public/assets/less/wi.less"];
+
+          less.engine.remotely = "/npm/less@4.2.0/dist/less.min.js";
+          less.style.locally = ["/public/assets/less/plugin/wi.less"];
 
           return response;
         } catch (error) {
@@ -104,15 +102,9 @@ module.exports = (...args) => {
             "/npm/uikit@3.18.3/dist/js/uikit.min.js",
             "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
           ];
-          less.engine = {
-            domain: "remotely",
-            location: "/npm/less@4.2.0/dist/less.min.js",
-          };
-          less.style.locally = ["/public/assets/less/wi.less"];
 
-          mjs = {
-            jslib: JSON.stringify({}),
-          };
+          less.engine.remotely = "/npm/less@4.2.0/dist/less.min.js";
+          less.style.locally = ["/public/assets/less/plugin/wi.less"];
 
           return response;
         } catch (error) {

@@ -1,7 +1,7 @@
 # OriCommJS_Components
 
 ![Static Badge](https://img.shields.io/badge/License-Mulan_PSL_v2-_)
-![Static Badge](https://img.shields.io/badge/Framework-OriCommJS_1.0.5-_)
+![Static Badge](https://img.shields.io/badge/Framework-OriCommJS_1.0.6-_)
 ![GitHub Release](https://img.shields.io/github/v/release/wkloh76/oricommjs_components)
 
 
