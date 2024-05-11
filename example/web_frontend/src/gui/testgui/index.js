@@ -15,7 +15,6 @@ module.exports = (...args) => {
         utils: { handler },
       } = library;
       let { fs, path } = sys;
-      // let { layouts } = components[compname];
       let lib = handler.restfulapi;
       let { DELETE, HEAD, GET, PATCH, POST, PUT } = lib;
       let {
@@ -206,6 +205,9 @@ module.exports = (...args) => {
             "/npm/uikit@3.18.3/dist/js/uikit.min.js",
             "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
           ];
+          mjs.locally.push("/public/assets/js/model/sample.js");
+          mjs.initialize["sample.init"] = [layer.params.title];
+
           less.engine = {
             domain: "remotely",
             location: "/npm/less@4.2.0/dist/less.min.js",

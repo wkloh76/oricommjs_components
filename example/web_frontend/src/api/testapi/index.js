@@ -50,6 +50,30 @@ module.exports = (...args) => {
         }
       };
 
+      POST["upload"] = (...args) => {
+        return new Promise(async (resolve, reject) => {
+          let [request, response] = args;
+          try {
+            let { render, upload } = response;
+
+            let input = handler.dataformat;
+            input.data = {
+              req: request,
+            };
+            let rtn = await webstorage(request, cosetting.ongoing.upload, true);
+            if (rtn.code == 0) {
+              render.options["json"] = {
+                message: rtn.data,
+              };
+            } else throw rtn;
+            resolve(response);
+          } catch (error) {
+            response.err.error = error.message;
+            resolve(response);
+          }
+        });
+      };
+
       resolve(lib);
     } catch (error) {
       reject(error);

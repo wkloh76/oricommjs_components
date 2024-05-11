@@ -34,7 +34,6 @@ module.exports = (...args) => {
     } = library;
 
     try {
-      let lib = {};
       let { components } = library;
 
       /**
