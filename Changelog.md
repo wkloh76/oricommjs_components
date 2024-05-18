@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.7] - 2024-05-16
+
+### Summary
+
+- Work with framework OriCommJS 1.0.8 and above.
+
+### Added
+
+- Add `defaulturl` into both example `coreseeting.toml` at production and debug area. Completed on 2024-05-16
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+- Remove `default.json` file and the oricommjs engine will get `defaulturl` from `coreseeting.toml`. Completed on 2024-05-16
+
+### Fixed
+
+### Security
+
+[1.0.7]: https://github.com/wkloh76/oricommjs_components/releases/tag/1.0.7
+
 ## [1.0.6] - 2024-05-09
 
 ### Summary

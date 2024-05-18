@@ -20,6 +20,7 @@ contentSecurityPolicy = { directives = { "script-src" = [
 ] } }
 
 [production]
+defaulturl=""
 remote = { cdn = "" }
 [production.upload]
 disk = 5120         # 1024 * 5000 is > 5MB save to file 
@@ -27,6 +28,7 @@ stream = 61440      # 1024 * 60000 > 60MB save as streamable
 location = ""
 
 [debug]
+defaulturl=""
 remote = { cdn = "https://cdn.jsdelivr.net" }
 [debug.upload]
 disk = 5120         # 1024 * 5000 is > 5MB save to file 

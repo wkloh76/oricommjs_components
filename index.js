@@ -185,9 +185,6 @@ module.exports = (...args) => {
             setting["ongoing"] = mergeDeep(setting["ongoing"], psetting[mode]);
           }
 
-          let initialurl = JSON.parse(
-            fs.readFileSync(join(prjsrc, "default.json"), "utf8")
-          );
           let comp_engine = library.engine[setting.general.engine.name];
 
           setting.share = {};
@@ -214,10 +211,8 @@ module.exports = (...args) => {
             `${compname}`
           ] = `/${compname}/public/assets`;
 
-          dataset[compname].defaulturl =
-            initialurl[setting.general.engine.type];
+          dataset[compname].defaulturl = setting.ongoing.defaulturl;
           comp_engine.register(dataset, compname, setting.general.engine);
-          setting.ongoing.initialurl = initialurl[setting.general.engine.type];
 
           let less = `@remote: "${setting.ongoing.remote.cdn}";@internal: "/${compname}/public/assets";`;
           fs.writeFileSync(
