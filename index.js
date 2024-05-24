@@ -192,14 +192,12 @@ module.exports = (...args) => {
           if (!setting.share[`/atomic`])
             setting.share[`/atomic`] = join(library.dir, "atomic");
 
-          for (let item of [
-            "startup",
-            "common",
-            "services",
-            "api",
-            "gui",
-            "rules",
-          ]) {
+          let load_module = [];
+          if (setting.general.engine.type !== "app")
+            load_module = ["startup", "common", "api", "gui", "rules"];
+          else load_module = ["startup", "common", "app"];
+
+          for (let item of load_module) {
             components[compname] = {
               ...components[compname],
               ...(await library.utils.import_cjs(

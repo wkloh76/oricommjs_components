@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Rename the `src/services` folder name to `src/app` and the modules inside only can proceed with app engine. Completed on 2024-05-24
+- Alter `index.js` init load `src` modules method base on engine defination. Completed on 2024-05-24
+
 ### Deprecated
 
 ### Removed
