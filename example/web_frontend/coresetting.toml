@@ -1,0 +1,62 @@
+[webnodejs]
+
+[webnodejs.parser]
+json = { limit = "1mb" }
+urlencoded = { limit = "1mb", extended = true, parameterLimit = 2000 }
+raw = { limit = "10mb" }
+text = { limit = "1mb" }
+
+[webnodejs.session]
+secret = "testing"
+path = "/index"
+httpOnly = true
+resave = false
+saveUninitialized = false
+cookie = { secure = false, maxAge = 1800000 }
+
+[webnodejs.helmet]
+contentSecurityPolicy = {}
+
+[production]
+defaulturl = ""
+remote = { cdn = "" }
+
+[production.upload]
+disk = 5120            # 1024 * 5000 is > 5MB save to file 
+stream = 61440         # 1024 * 60000 > 60MB save as streamable
+location = "./uploads"
+
+[debug]
+defaulturl = ""
+remote = { cdn = "https://cdn.jsdelivr.net" }
+
+[production.sqlite3]
+
+[production.sqlite3.log]
+type = "dateFile"
+keepFileExt = true
+maxLogSize = "50M"
+numBackups = 10
+success.layout = { type = "basic", pattern = "%d %p %c %X{user} %m%n" }
+
+[production.sqlite3.db]
+workdb = { path = "", type = "memory" }
+filedb = { path = "", type = "file" }
+
+[debug.upload]
+disk = 5120            # 1024 * 5000 is > 5MB save to file 
+stream = 61440         # 1024 * 60000 > 60MB save as streamable
+location = "./uploads"
+
+[debug.sqlite3]
+
+[debug.sqlite3.log]
+type = "dateFile"
+keepFileExt = true
+maxLogSize = "50M"
+numBackups = 10
+success.layout = { type = "basic", pattern = "%d %p %c %X{user} %m%n" }
+
+[debug.sqlite3.db]
+device = { path = "", type = "file", backup = "" }
+testfile = { path = "", type = "memory", backup = "" }
