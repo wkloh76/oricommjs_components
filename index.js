@@ -30,7 +30,7 @@ module.exports = (...args) => {
     } = sys;
     const {
       engine: { deskelectron, webnodejs },
-      utils: { errhandler },
+      utils: { errhandler, getNestedObject },
     } = library;
 
     try {
@@ -192,7 +192,14 @@ module.exports = (...args) => {
           if (!setting.share[`/atomic`])
             setting.share[`/atomic`] = join(library.dir, "atomic");
 
-          for (let item of ["common", "services", "api", "gui", "rules"]) {
+          for (let item of [
+            "startup",
+            "common",
+            "services",
+            "api",
+            "gui",
+            "rules",
+          ]) {
             components[compname] = {
               ...components[compname],
               ...(await library.utils.import_cjs(
@@ -222,6 +229,15 @@ module.exports = (...args) => {
           );
           components.done.push(setting.general.engine);
           if (!components.start) components.start = comp_engine.start;
+
+          if (Object.keys(components[compname]["startup"]).length > 0) {
+            for (let [, module] of Object.entries(
+              components[compname]["startup"]
+            )) {
+              if (!components.startup) components.startup = [];
+              components.startup.push(module.startup);
+            }
+          }
           if (!components.routejson) components.routejson = { ...routejson };
           else
             components.routejson = mergeDeep(components.routejson, routejson);

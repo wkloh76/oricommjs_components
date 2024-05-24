@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add `defaulturl` into both example `coreseeting.toml` at production and debug area. Completed on 2024-05-16
+- Create startup module to src the job scope is initial something im components side before the entire system ready. Completed on 2024-05-24
 
 ### Changed
 
