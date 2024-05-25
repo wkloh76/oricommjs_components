@@ -24,74 +24,9 @@ This is a user playground for users to design web servers, desktop applications,
    - `web_` for web application.
    - `desktop_` for desktop application.
 
-3. For web server design,copy `coresetting.toml.example.web` file and rename to `coresetting.toml` The content show as below:
+3. For web server design,copy [coresetting.toml.example.web][coresetting-web] file and rename to `coresetting.toml`.
 
-```
-[webnodejs]
-[webnodejs.parser]
-json = { limit = "1mb" }
-urlencoded = { limit = "1mb", extended = true, parameterLimit = 2000 }
-raw = { limit = "10mb" }
-text = { limit = "1mb" }
-
-[webnodejs.session]
-secret = "WKLOH"
-path = "/index"
-httpOnly = true
-resave = false
-saveUninitialized = false
-cookie = { secure = false, maxAge = 1800000 }
-
-[webnodejs.helmet]
-contentSecurityPolicy = { directives = { "script-src" = [
-  "'self'",
-  "example.com",
-] } }
-
-[production]
-remote = { cdn = "" }
-[debug]
-remote = { cdn = "" }
-```
-
-5. For desktop application design,copy `coresetting.toml.example.desktop` file and rename to `coresetting.toml` The content show as below:
-
-```
-[window]
-title = ""
-icon = "link.png"
-toolbar = true
-frame = true
-width = 1280
-height = 720
-fullscreen = false
-resizetomonitor = false
-resizemonitorwidth = 50
-resizemonitorheight = 100
-resizable = true
-min_width = 800
-min_height = 640
-max_width = 1366
-max_height = 2160
-openDevTools = true
-position = "center"
-autoHideMenuBar = false
-useContentSize = true
-nodeIntegration = false
-contextIsolation = true
-webSecurity = true
-enableRemoteModule = false
-show = false
-url = ""
-page = ""
-el = "localapi"
-
-[production]
-remote = { cdn = "" }
-[debug]
-remote = { cdn = "" }
-
-```
+4. For desktop application design,copy [coresetting.toml.example.desktop][coresetting-desktop] file and rename to `coresetting.toml`.
 
 ### Start coding
 
@@ -106,3 +41,11 @@ remote = { cdn = "" }
 
 - Web server -- tested with webnodejs.
 - Desktop Application -- not finish yet
+
+# License
+
+OriCommJS_Components is freely distributable under the terms of the [Mulan PSL v2 license][license-url].
+
+[license-url]: License
+[coresetting-web]: coresetting.toml.example.web
+[coresetting-desktop]: coresetting.toml.example.desktop
