@@ -4,7 +4,6 @@
 ![Static Badge](https://img.shields.io/badge/Framework-OriCommJS_1.0.9-_)
 ![GitHub Release](https://img.shields.io/github/v/release/wkloh76/oricommjs_components)
 
-
 This is a user playground for users to design web servers, desktop applications, and non-GUI applications. It is a sub-framework of the OriCommJS framework and must work with OriCommJS.
 
 ## Objective
@@ -25,9 +24,7 @@ This is a user playground for users to design web servers, desktop applications,
    - `web_` for web application.
    - `desktop_` for desktop application.
 
-3. copy `default.json.example` file and rename to `default.json` and enter the default url.
-
-4. For web server design,copy `coresetting.toml.example.web` file and rename to `coresetting.toml` The content show as below:
+3. For web server design,copy `coresetting.toml.example.web` file and rename to `coresetting.toml` The content show as below:
 
 ```
 [webnodejs]
@@ -95,6 +92,15 @@ remote = { cdn = "" }
 remote = { cdn = "" }
 
 ```
+
+### Start coding
+
+1. Web server and desktop coding, please start your into startup,common,api,gui,rules folders.
+   - startup - Initialize such as db connection,data import/export,backend service.
+   - common/models - The code in here allow to directlly apply from gui,api and rules.
+   - api - Handle all web api request and will render data in text.json and etc.
+   - gui - Handle browser request and will render html statement if success.
+   - rules - Define for pre and post process for api and gui.
 
 # Status
 

@@ -23,6 +23,7 @@ module.exports = (...args) => {
         let [request, response] = args;
         try {
           let { render } = response;
+          let { user } = components[compname].common.models;
 
           let input = handler.dataformat;
           input.data = {
@@ -42,6 +43,7 @@ module.exports = (...args) => {
               ...renameObjectKeys(test, { abc: "abb" }),
               ...renameObjectKeys(test, { wait: "wait1" }),
               ...cosetting.owner,
+              namelist: user.namelist(),
             };
           }
         } catch (error) {

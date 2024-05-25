@@ -192,10 +192,40 @@ module.exports = (...args) => {
           if (!setting.share[`/atomic`])
             setting.share[`/atomic`] = join(library.dir, "atomic");
 
+          components[compname] = {
+            ...components[compname],
+            ...(await library.utils.import_cjs(
+              [join(prjsrc, "src"), ["startup"], compname],
+              library.utils,
+              [library, sys, setting]
+            )),
+          };
+
+          // let commmodel = library.utils.dir_module(
+          //   join(prjsrc, "src", "common", "models")
+          // );
+
+          components[compname] = {
+            ...components[compname],
+            common: {
+              models: await library.utils.import_cjs(
+                [
+                  join(prjsrc, "src", "common", "models"),
+                  library.utils.dir_module(
+                    join(prjsrc, "src", "common", "models")
+                  ),
+                  compname,
+                ],
+                library.utils,
+                [library, sys, setting]
+              ),
+            },
+          };
+
           let load_module = [];
           if (setting.general.engine.type !== "app")
-            load_module = ["startup", "common", "api", "gui", "rules"];
-          else load_module = ["startup", "common", "app"];
+            load_module = ["api", "gui", "rules"];
+          else load_module = ["app"];
 
           for (let item of load_module) {
             components[compname] = {
@@ -207,6 +237,7 @@ module.exports = (...args) => {
               )),
             };
           }
+
           let routejson = await prepare_rules(components[compname]);
           let dataset = {};
           dataset[compname] = components[compname];

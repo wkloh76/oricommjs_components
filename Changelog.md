@@ -16,12 +16,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Update example and encourage apply await response.inspector function into the gui,api,app and common/model. Completed on 2024-05-25
+- Update example and show how to call function from `common/models`. Completed on 2024-05-25
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+
+- Fix bug in `index.js` where is the common modules be empty object issue. Completed on 2024-05-25
 
 ### Security
 
