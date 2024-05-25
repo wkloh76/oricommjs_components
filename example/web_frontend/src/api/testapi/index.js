@@ -17,6 +17,7 @@ module.exports = (...args) => {
 
       let lib = handler.restfulapi;
       let { DELETE, HEAD, GET, PATCH, POST, PUT } = lib;
+      let test = require(join(pathname, "test"))(params, obj);
 
       POST["testjson"] = async (...args) => {
         let [request, response] = args;
@@ -74,6 +75,106 @@ module.exports = (...args) => {
         });
       };
 
+      GET["test-promiss-error"] = (...args) => {
+        return new Promise((resolve, reject) => {
+          let [request, response] = args;
+          try {
+            let { render } = response;
+
+            insp = 1;
+            render.options["json"] = {
+              code: 0,
+              msg: "",
+              data: insp,
+            };
+            resolve(response);
+          } catch (error) {
+            reject(error);
+          }
+        });
+      };
+
+      GET["test-error"] = (...args) => {
+        let [request, response] = args;
+        try {
+          let { render } = response;
+
+          insp = 1;
+          render.options["json"] = {
+            code: 0,
+            msg: "",
+            data: insp,
+          };
+          return response;
+        } catch (error) {
+          return error;
+        }
+      };
+
+      GET["test-async-error"] = async (...args) => {
+        let [request, response] = args;
+        try {
+          let { render } = response;
+
+          insp = 1;
+          await test.sleep(1000, 1);
+          render.options["json"] = {
+            code: 0,
+            msg: "",
+            data: insp,
+          };
+          return response;
+        } catch (error) {
+          return error;
+        }
+      };
+
+      GET["test-inspect-promiss-error"] = (...args) => {
+        return new Promise(async (resolve, reject) => {
+          let [request, response] = args;
+          try {
+            let { render, inspector } = response;
+
+            let getprm = handler.getprm(request);
+            render.options["json"] = {
+              code: 0,
+              msg: "",
+              data: null,
+            };
+
+            let insp;
+            if (getprm.options) {
+              switch (getprm.options) {
+                case 1:
+                  insp = await inspector(test.test_promise_error, []);
+                  break;
+                case 2:
+                  insp = await inspector(test.test_promise, []);
+                  break;
+                case 3:
+                  insp = await inspector(test.test_async_await, []);
+                  break;
+                case 4:
+                  insp = await inspector(test.test_async_await_error, []);
+                  break;
+              }
+
+              if (insp.err) throw insp;
+            } else {
+              render.options["json"] = {
+                code: -1,
+                msg: "Cannot find the the parameter(options)!",
+                data: null,
+              };
+            }
+
+            resolve(response);
+          } catch (error) {
+            // response.err.error = error;
+            reject(error);
+          }
+        });
+      };
       resolve(lib);
     } catch (error) {
       reject(error);
