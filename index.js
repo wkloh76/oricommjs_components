@@ -212,7 +212,8 @@ module.exports = (...args) => {
                 [
                   join(prjsrc, "src", "common", "models"),
                   library.utils.dir_module(
-                    join(prjsrc, "src", "common", "models")
+                    join(prjsrc, "src", "common", "models"),
+                    setting.general.excludefile
                   ),
                   compname,
                 ],
