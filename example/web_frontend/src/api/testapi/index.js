@@ -146,7 +146,7 @@ module.exports = (...args) => {
 
             let insp;
             if (getprm.options) {
-              switch (getprm.options) {
+              switch (parseInt(getprm.options)) {
                 case 1:
                   insp = await inspector(test.test_promise_error, []);
                   break;
