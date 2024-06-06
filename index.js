@@ -225,7 +225,7 @@ module.exports = (...args) => {
 
           let load_module = [];
           if (setting.general.engine.type !== "app")
-            load_module = ["api", "gui", "rules"];
+            load_module = ["rules", "api", "gui"];
           else load_module = ["app"];
 
           for (let item of load_module) {

@@ -9,11 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Summary
 
-- Work with framework OriCommJS 1.0.9 and above.
+- Work with framework OriCommJS 1.1.0 and above.
+- Add new rule properties suitable for webnodejs engine in api/index.js and gui/index.js to provide robust handling in rule checking. Complete on 2024-06-06
 
 ### Added
 
 ### Changed
+
+- Chnage load module sequence to rules, api, gui in in `index.js`. Completed on 2024-06-06
 
 ### Deprecated
 

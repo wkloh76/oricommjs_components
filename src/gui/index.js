@@ -54,9 +54,12 @@ module.exports = (...args) => {
               rtn["from"] = "gui";
               rtn["method"] = module_key;
               rtn["name"] = key;
+              rtn["strict"] = false;
               if (/[|]/.test(key)) {
-                rtn["rules"] = key.split("|").pop();
-                url = key.split("|")[0];
+                let keyitem = key.split("|");
+                url = keyitem[0];
+                rtn["rules"] = keyitem[1];
+                if (keyitem[2] && keyitem[2] == "strict") rtn["strict"] = true;
               } else url = key;
               controller = val;
 
