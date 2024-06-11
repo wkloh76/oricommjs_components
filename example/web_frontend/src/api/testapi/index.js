@@ -1,6 +1,6 @@
 "use strict";
 /**
- * The submodule of testgui
+ * The submodule of testapi
  * @module testapi
  */
 module.exports = (...args) => {
@@ -176,6 +176,127 @@ module.exports = (...args) => {
             reject(error);
           }
         });
+      };
+
+      GET["test-mariadb|permit-mariadb-strict|strict"] = async (...args) => {
+        let [request, response] = args;
+        try {
+          let { render, rule } = response;
+
+          let cond = rule["db"].datacenter.rules;
+          let dboption = rule["db"].datacenter.dboption;
+          cond.transaction = true;
+
+          let isempty = await rule["db"].datacenter.ischema("testdb1");
+          let data1 = await rule["db"].datacenter.query(
+            [
+              {
+                type: "INSERT",
+                sql: "INSERT INTO testdb.sys (taskname,describle,valid) VALUES('create_sflow','Create system flow',1),('create_uflow','Create user flow',1),('create_pflow','Create process flow',1);",
+              },
+              // {
+              //   type: "INSERT",
+              //   sql: "INSERT INTO testdb.sys (syid,taskname,describle,valid) VALUE(2,'create_uflow','Create user flow',1);",
+              // },
+              {
+                type: "UPDATE",
+                sql: "UPDATE testdb.sys SET valid=0  WHERE taskname='create_sflow';",
+              },
+              {
+                type: "SELECT",
+                sql: "SELECT * FROM testdb.sys;",
+              },
+            ],
+            cond
+          );
+
+          if (data1.code == 0) render.options["json"] = data1.data;
+          else throw data1.data;
+
+          cond.transaction = false;
+          cond.queryone = true;
+          let data = await rule["db"].datacenter.query(
+            [
+              {
+                type: "SELECT",
+                sql: "SELECT * FROM web_cs.`cs`  WHERE valid=1;",
+              },
+              {
+                type: "SELECT",
+                sql: "SELECT *  FROM oqc_mgmt.`cs_pcs` WHERE valid=1 LIMIT 5;",
+              },
+            ],
+            cond
+          );
+
+          if (data.code == 0)
+            for (let itm of data.data) render.options["json"].push(itm);
+          else throw data.data;
+          return response;
+        } catch (error) {
+          return error;
+        }
+      };
+
+      GET["test-sqlite|auth-sqlite|strict"] = async (...args) => {
+        let [request, response] = args;
+        try {
+          let { render, rule } = response;
+
+          let cond = rule.db.mgmtdb.rules;
+          let dboption = rule.db.mgmtdb.dboption;
+          cond.transaction = true;
+
+          let data1 = rule.db.mgmtdb.query(
+            [
+              {
+                type: "INSERT",
+                sql: "INSERT INTO cats (name, age) VALUES(@name, @age);",
+                value: [
+                  { name: "Joey", age: 2 },
+                  { name: "Sally", age: 4 },
+                  { name: "Junior", age: 1 },
+                ],
+              },
+              // {
+              //   type: "INSERT",
+              //   sql: "INSERT INTO cats (pid,name, age) VALUES(@pid,@name, @age);",
+              //   value: [
+              //     { pid: 1, name: "Joey", age: 2 },
+              //     { pid: 2, name: "Sally", age: 4 },
+              //     { pid: 3, name: "Junior", age: 1 },
+              //   ],
+              // },
+              {
+                type: "INSERT",
+                sql: "INSERT INTO cats (name, age) VALUES('wkloh', 10);",
+              },
+              {
+                type: "UPDATE",
+                sql: "UPDATE cats SET age=15 WHERE name='wkloh';",
+              },
+              {
+                type: "SELECT",
+                sql: "SELECT * FROM cats;",
+              },
+            ],
+            cond
+          );
+
+          if (data1.code == 0) {
+            render.options["json"] = data1.data;
+          } else throw data1.data;
+          return response;
+        } catch (error) {
+          let err = {};
+          err.code = error.code;
+          err.message = error.message;
+          err.stack = error.stack;
+          let yy = JSON.stringify(err);
+          let kk = error.message;
+          response.err.error = error;
+          return response;
+        }
       };
       resolve(lib);
     } catch (error) {

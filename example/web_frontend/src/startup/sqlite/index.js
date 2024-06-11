@@ -28,53 +28,55 @@ module.exports = (...args) => {
       path: { join },
     } = sys;
     const {
-      utils: { handler, getNestedObject },
       engine: { sqlmanager },
     } = library;
 
     try {
       let lib = {};
-      let database = {
-        mgmtdb: {
-          import: join(pathname, "device.sql"),
-          backup: join(pathname, "mgmtdb.bak"),
-        },
-        operationdb: {
-          import: join(pathname, "testfile.sql"),
-          backup: join(pathname, "operationdb.bak"),
-        },
-      };
       let dbengine = "sqlite3";
 
       lib["startup"] = async (...args) => {
         let [setting, backup = true] = args;
         let output;
         try {
-          output = await sqlmanager[dbengine].create(setting[dbengine]);
+          output = await sqlmanager[dbengine].createlog(
+            sqlmanager,
+            setting[dbengine]
+          );
           if (output.code == 0) {
+            let err;
             for (let [key] of Object.entries(setting[dbengine]["db"])) {
-              output = sqlmanager[dbengine].status(key);
-
-              if (output.code == 0) {
-                console.log(`${key} database status:`, JSON.stringify(output));
-                if (output.data.connected && !output.data.schema) {
-                  sqlmanager[dbengine].import(key, database[key].import);
-                  console.log(
-                    `${key} Import Status:`,
-                    JSON.stringify(sqlmanager[dbengine].status(key))
-                  );
-                }
-
-                await sqlmanager[dbengine].backup(key, database[key].backup);
-                console.log(`Backup ${dbengine}.bak done!`);
-              } else throw output;
+              let { ...dbconf } = setting[dbengine]["db"][key];
+              dbconf["engine"] = dbengine;
+              output = await sqlmanager[dbengine].register(
+                dbconf,
+                key,
+                compname
+              );
+              if (output.code !== 0)
+                err += `Unable establish ${key}.db3 database connection to ${dbengine} server!`;
             }
+            if (err)
+              throw {
+                message: "Failure to create all database!",
+                stack: err,
+              };
+            let conn = await sqlmanager.sqlite3.connector("device", compname);
+            let ischema = await conn.data.mgmtdb.ischema("testdb1");
+            if (!ischema) conn.data.mgmtdb.import(join(pathname, "device.sql"));
+            await conn.data.mgmtdb.disconnect();
           } else throw output;
-
           return;
         } catch (error) {
           return error;
         }
+      };
+
+      lib["backup"] = async (...args) => {
+        let [dbname, backup = true] = args;
+        let conn = await sqlmanager.sqlite3.connector(dbname, compname);
+        await conn.data[dbname].backup(join(pathname, `${dbname}.bak"`));
+        await conn.data.mgmtdb.disconnect();
       };
       resolve(lib);
     } catch (error) {
