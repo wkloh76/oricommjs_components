@@ -298,6 +298,112 @@ module.exports = (...args) => {
           return response;
         }
       };
+
+      GET["test-sqltemplate-select|basic-mariadb"] = async (...args) => {
+        let [request, response] = args;
+        try {
+          let { render, rule } = response;
+          let getprm = handler.getprm(request);
+
+          let { DB, DEFAULT, INSERT, SELECT, UPDATE, TABLE, WHERE } =
+            handler.sqlgeneric;
+          DB = "testdb";
+          TABLE = ["products"];
+
+          INSERT = [
+            {
+              name: "wkloh",
+              price: 33,
+              stock: 5555,
+              attribute: JSON.stringify({ side: "L", color: "purple" }),
+            },
+          ];
+
+          let prepare1 = await sqlmanager.sqltemplate.generate({
+            DB,
+            DEFAULT,
+            INSERT,
+            TABLE,
+          });
+
+          UPDATE = [
+            {
+              stock: 55,
+            },
+          ];
+
+          WHERE.OR = { stock: [555, 5555] };
+          let prepare2 = await sqlmanager.sqltemplate.generate({
+            DB,
+            DEFAULT,
+            UPDATE,
+            TABLE,
+            WHERE,
+          });
+
+          SELECT = [
+            {
+              name: "username",
+              price: "saleprice",
+              stock: "balancestock",
+              attribute: "specification",
+            },
+          ];
+
+          WHERE = handler.sqlgeneric.WHERE;
+          WHERE.AND = { name: `${getprm.username}` };
+          WHERE.OR = { stock: [3, 5] };
+
+          let prepare = await sqlmanager.sqltemplate.generate({
+            DB,
+            DEFAULT,
+            SELECT,
+            TABLE,
+            WHERE,
+          });
+
+          let cond = rule["db"].datacenter.rules;
+          let dboption = rule["db"].datacenter.dboption;
+          // cond.transaction = true;
+
+          let isempty = await rule["db"].datacenter.ischema("testdb");
+          let data1 = await rule["db"].datacenter.query(
+            [
+              {
+                type: prepare1.data.cmd,
+                sql: prepare1.data.value,
+              },
+              {
+                type: prepare2.data.cmd,
+                sql: prepare2.data.value,
+              },
+              {
+                type: prepare.data.cmd,
+                sql: prepare.data.value,
+              },
+            ],
+            cond
+          );
+
+          if (data1.code == 0)
+            render.options["json"] = {
+              cmd: prepare.data.value,
+              data: data1.data,
+            };
+          // for (let itm of data1.data) render.options["json"].push(itm);
+          else throw data1.data;
+          return response;
+        } catch (error) {
+          let err = {};
+          err.code = error.code;
+          err.message = error.message;
+          err.stack = error.stack;
+          let yy = JSON.stringify(err);
+          let kk = error.message;
+          response.err.error = error;
+          return response;
+        }
+      };
       resolve(lib);
     } catch (error) {
       reject(error);
