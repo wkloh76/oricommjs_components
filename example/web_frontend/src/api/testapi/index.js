@@ -10,14 +10,38 @@ module.exports = (...args) => {
     const [library, sys, cosetting] = obj;
     try {
       let {
+        dir,
         components,
-        utils: { handler, renameObjectKeys },
+        engine: { sqlmanager },
+        utils: { arr_diff, handler, webstorage, errhandler },
       } = library;
-      let { fs, path } = sys;
+      let {
+        fs,
+        path: { join },
+      } = sys;
 
       let lib = handler.restfulapi;
       let { DELETE, HEAD, GET, PATCH, POST, PUT } = lib;
+      let {
+        remote: { cdn, apiserver, wsserver },
+      } = cosetting.ongoing;
+
       let test = require(join(pathname, "test"))(params, obj);
+
+      let regulation = components[compname].rules.regulation.api;
+      regulation.strict["auth-sqlite"][curdir] = ["test-sqlite"];
+      regulation.strict["permit-mariadb-strict"][curdir] = ["test-mariadb"];
+      regulation.nostrict["basic-mariadb"][curdir] = [
+        "test-sqltemplate-select",
+      ];
+      regulation.none[curdir] = [
+        "testjson",
+        "upload",
+        "test-inspect-promiss-error",
+        "test-promiss-error",
+        "test-error",
+        "test-async-error",
+      ];
 
       POST["testjson"] = async (...args) => {
         let [request, response] = args;
@@ -178,7 +202,7 @@ module.exports = (...args) => {
         });
       };
 
-      GET["test-mariadb|permit-mariadb-strict|strict"] = async (...args) => {
+      GET["test-mariadb"] = async (...args) => {
         let [request, response] = args;
         try {
           let { render, rule } = response;
@@ -238,7 +262,7 @@ module.exports = (...args) => {
         }
       };
 
-      GET["test-sqlite|auth-sqlite|strict"] = async (...args) => {
+      GET["test-sqlite"] = async (...args) => {
         let [request, response] = args;
         try {
           let { render, rule } = response;
@@ -299,7 +323,7 @@ module.exports = (...args) => {
         }
       };
 
-      GET["test-sqltemplate-select|basic-mariadb"] = async (...args) => {
+      GET["test-sqltemplate-select"] = async (...args) => {
         let [request, response] = args;
         try {
           let { render, rule } = response;

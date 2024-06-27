@@ -23,7 +23,10 @@ module.exports = (...args) => {
     const [params, obj] = args;
     const [pathname, curdir, compname] = params;
     const [library, sys, cosetting] = obj;
-    const { dir_module, import_cjs, errhandler } = library.utils;
+    const {
+      utils: { dir_module, import_cjs, errhandler },
+      components,
+    } = library;
     const { excludefile } = cosetting.general;
     try {
       let lib = {};
@@ -43,9 +46,10 @@ module.exports = (...args) => {
         library.utils,
         [library, sys, cosetting]
       );
-      for (let [modname, module] of Object.entries(arr_modules)) {
-        for (let [module_key, module_val] of Object.entries(module)) {
-          // let format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+      let { gui } = components[compname].rules.regulation;
+
+      for (let [modname, RESTAPI] of Object.entries(arr_modules)) {
+        for (let [module_key, module_val] of Object.entries(RESTAPI)) {
           if (Object.keys(module_val).length > 0) {
             for (let [key, val] of Object.entries(module_val)) {
               let url, controller;
@@ -53,20 +57,39 @@ module.exports = (...args) => {
 
               rtn["from"] = "gui";
               rtn["method"] = module_key;
-              rtn["name"] = key;
               rtn["strict"] = false;
-              if (/[|]/.test(key)) {
-                let keyitem = key.split("|");
-                url = keyitem[0];
-                rtn["rules"] = keyitem[1];
-                if (keyitem[2] && keyitem[2] == "strict") rtn["strict"] = true;
-              } else url = key;
-              controller = val;
 
-              let pos = url.indexOf("@");
-              if (pos > -1) {
-                rtn["url"] = `/${compname}/${url.substring(1)}`;
-              } else rtn["url"] = `/${compname}/${modname}/${url}`;
+              if (gui.none[modname] && gui.none[modname].includes(key)) {
+                rtn["name"] = key;
+                url = key;
+              } else {
+                if (!rtn["rules"]) {
+                  Object.keys(gui.nostrict).map((value) => {
+                    if (gui.nostrict[value][modname])
+                      if (gui.nostrict[value][modname].includes(key)) {
+                        rtn["name"] = key;
+                        rtn["rules"] = value;
+                        url = key;
+                      }
+                  });
+                }
+
+                if (!rtn["rules"]) {
+                  Object.keys(gui.strict).map((value) => {
+                    if (gui.strict[value][modname]) {
+                      if (gui.strict[value][modname].includes(key)) {
+                        rtn["name"] = key;
+                        rtn["rules"] = value;
+                        rtn["strict"] = true;
+                        url = key;
+                      }
+                    }
+                  });
+                }
+              }
+
+              controller = val;
+              rtn["url"] = `/${compname}/${modname}/${url}`;
               if (rtn?.["url"] && rtn?.["method"]) {
                 rtn["controller"] = controller;
                 lib[rtn["url"]] = rtn;

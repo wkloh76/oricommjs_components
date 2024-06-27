@@ -33,9 +33,13 @@ This is a user playground for users to design web servers, desktop applications,
 1. Web server and desktop coding, please start your into startup,common,api,gui,rules folders.
    - startup - Initialize such as db connection,data import/export,backend service.
    - common/models - The code in here allow to directlly apply from gui,api and rules.
-   - api - Handle all web api request and will render data in text.json and etc.
+   - api - Handle all web api request and will render data in text,json and etc.
    - gui - Handle browser request and will render html statement if success.
    - rules - Define for pre and post process for api and gui.
+
+# Notice
+
+- All url name will start from components naming,second from folder naming (inside gui and api folder) and continue with controller naming. Example: gui/testapi/index.js the url should be `/oricommjs_components/testapi/test`.
 
 # Status
 

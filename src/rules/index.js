@@ -39,8 +39,19 @@ module.exports = (...args) => {
         lib["module"] = { ...lib["module"], ...val };
       }
 
+      lib["regulation"] = {
+        api: { strict: {}, nostrict: {}, none: {} },
+        gui: { strict: {}, nostrict: {}, none: {} },
+      };
       if (fs.existsSync(rulespath))
         lib["rule"] = JSON.parse(fs.readFileSync(rulespath));
+
+      Object.keys(lib["rule"]).map((value) => {
+        lib["regulation"]["api"]["strict"][value] = {};
+        lib["regulation"]["gui"]["strict"][value] = {};
+        lib["regulation"]["api"]["nostrict"][value] = {};
+        lib["regulation"]["gui"]["nostrict"][value] = {};
+      });
 
       resolve(lib);
     } catch (error) {

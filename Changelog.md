@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add new key `viewspath` into `components[name].common` when import common module to components global variable at `index.js`. Completed on 2024-06-27
+- Implement new method to declare controller in strict,nostrict or none rule for both gui and api. The involve change `src/gui/index.js`,`src/api/index.js` and `src/rules/index.js`. Completed on 2024-06-27
 
 ### Changed
 

@@ -21,11 +21,23 @@ module.exports = (...args) => {
         remote: { cdn, apiserver, wsserver },
       } = cosetting.ongoing;
 
-      let compath = path.join(dir, "components", compname, "src");
-      let commonviews = path.join(compath, "common", "views");
       let testnoapi = require("./testgui")(params, obj);
 
-      GET[`@test/dashboard/text|r0`] = (...args) => {
+      let commonviews = components[compname].common.viewspath;
+
+      let regulation = components[compname].rules.regulation.gui;      
+      regulation.none[curdir] = [
+        "dashboard-pass",
+        "dashboard-layout-pass",
+        "test-json",
+      ];
+      regulation.nostrict["r0"][curdir] = ["test-dashboard-text"];
+      regulation.nostrict["r10"][curdir] = ["test-dashboard-json"];
+      regulation.nostrict["r4"][curdir] = ["test-dashboard-pass"];
+      regulation.nostrict["r30"][curdir] = ["test-dashboard-syserr"];
+      regulation.nostrict["r1"][curdir] = ["dashboard"];
+
+      GET["test-dashboard-text"] = (...args) => {
         let [request, response] = args;
         try {
           let {
@@ -68,7 +80,7 @@ module.exports = (...args) => {
           return response;
         }
       };
-      GET[`@test-dashboard-json|r10`] = (...args) => {
+      GET["test-dashboard-json"] = (...args) => {
         let [request, response] = args;
         try {
           let {
@@ -111,7 +123,7 @@ module.exports = (...args) => {
           return response;
         }
       };
-      GET[`@test-dashboard-pass|r4`] = (...args) => {
+      GET["test-dashboard-pass"] = (...args) => {
         let [request, response] = args;
         try {
           let {
@@ -156,7 +168,7 @@ module.exports = (...args) => {
           return response;
         }
       };
-      GET[`dashboard-pass`] = (...args) => {
+      GET["dashboard-pass"] = (...args) => {
         let [request, response] = args;
         try {
           let {
@@ -177,7 +189,7 @@ module.exports = (...args) => {
         }
       };
 
-      GET[`dashboard-layout-pass`] = (...args) => {
+      GET["dashboard-layout-pass"] = (...args) => {
         let [request, response] = args;
         try {
           let {
@@ -221,7 +233,7 @@ module.exports = (...args) => {
         }
       };
 
-      GET[`@test/dashboard/syserr|r30`] = (...args) => {
+      GET["test-dashboard-syserr"] = (...args) => {
         let [request, response] = args;
         try {
           let {
@@ -269,7 +281,7 @@ module.exports = (...args) => {
         }
       };
 
-      GET[`dashboard|r1`] = (...args) => {
+      GET["dashboard"] = (...args) => {
         let [request, response] = args;
         try {
           let {

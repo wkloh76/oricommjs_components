@@ -6,18 +6,26 @@ module.exports = (...args) => {
     try {
       let {
         dir,
+        atomic: {
+          atom: { paletttools, smfetch },
+        },
         components,
-        utils: { handler },
+        utils: { arr_diff, handler },
       } = library;
-      let { fs, path } = sys;
+      let {
+        fs,
+        path: { join },
+      } = sys;
       let lib = handler.restfulapi;
       let { DELETE, HEAD, GET, PATCH, POST, PUT } = lib;
       let {
         remote: { cdn, apiserver, wsserver },
       } = cosetting.ongoing;
 
-      let compath = path.join(dir, "components", compname, "src");
-      let commonviews = path.join(compath, "common", "views");
+      let commonviews = components[compname].common.viewspath;
+
+      let regulation = components[compname].rules.regulation.gui;
+      regulation.none[curdir] = ["index"];
 
       GET[`index`] = (...args) => {
         let [request, response] = args;
@@ -48,7 +56,7 @@ module.exports = (...args) => {
           return error;
         }
       };
-      
+
       resolve(lib);
     } catch (error) {
       reject(error);
