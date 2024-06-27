@@ -220,6 +220,7 @@ module.exports = (...args) => {
                 library.utils,
                 [library, sys, setting]
               ),
+              viewspath: join(prjsrc, "src", "common", "views"),
             },
           };
 

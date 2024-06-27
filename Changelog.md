@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add new key `viewspath` into `components[name].common` when import common module to components global variable at `index.js`. Completed on 2024-06-27
+
 ### Changed
 
 - Update example in startup/sqlite. Completed on 2024-06-10
