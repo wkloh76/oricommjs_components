@@ -62,9 +62,9 @@ module.exports = (...args) => {
                 stack: err,
               };
             let conn = await sqlmanager.sqlite3.connector("device", compname);
-            let ischema = await conn.data.mgmtdb.ischema("testdb1");
-            if (!ischema) conn.data.mgmtdb.import(join(pathname, "device.sql"));
-            await conn.data.mgmtdb.disconnect();
+            let ischema = await conn.data.device.ischema("testdb1");
+            if (!ischema) conn.data.device.import(join(pathname, "device.sql"));
+            await conn.data.device.disconnect();
           } else throw output;
           return;
         } catch (error) {
@@ -76,7 +76,7 @@ module.exports = (...args) => {
         let [dbname, backup = true] = args;
         let conn = await sqlmanager.sqlite3.connector(dbname, compname);
         await conn.data[dbname].backup(join(pathname, `${dbname}.bak"`));
-        await conn.data.mgmtdb.disconnect();
+        await conn.data.device.disconnect();
       };
       resolve(lib);
     } catch (error) {

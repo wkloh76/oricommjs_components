@@ -16,7 +16,7 @@
 "use strict";
 /**
  * auth
- * @module src_rules_detrans_index
+ * @module src_rules_auth_index
  */
 module.exports = (...args) => {
   return new Promise(async (resolve, reject) => {
@@ -24,21 +24,25 @@ module.exports = (...args) => {
     const [pathname, curdir, compname] = params;
     const [library, sys, cosetting] = obj;
     try {
+      let {
+        utils: { handler },
+        engine: { sqlmanager },
+      } = library;
       let lib = {};
 
-      lib["mystart"] = async (...args) => {
+      lib["start_mariadb"] = async (...args) => {
         let [request, response] = args;
         try {
-          let { fname } = response;
-          let conn_id = 1;
+          let { session } = request;
+          let { err, fname, rule } = response;
 
-          console.log(`${fname} done`);
-
-          response.rule = {
-            ...response.rule,
-            ...{ track_sys: conn_id },
-          };
-          console.log(`Create ${conn_id}`);
+          console.log("start_mariadb");
+          let conn = await sqlmanager.mariadb.connector("workdb", compname);
+          if (conn.code == 0) {
+            rule["db"] = {
+              workdb: conn.data["workdb"],
+            };
+          } else throw { message: "Undefined mariadb connection!" };
 
           return response;
         } catch (error) {
@@ -46,13 +50,20 @@ module.exports = (...args) => {
           return response;
         }
       };
-      lib["mystop"] = (...args) => {
+
+      lib["start_sqlite3"] = async (...args) => {
         let [request, response] = args;
         try {
-          // Here can't get response value
-          let { fname } = response;
+          let { session } = request;
+          let { err, fname, rule } = response;
 
-          console.log(`${fname} done end ${response.rule["track_sys"]}`);
+          console.log("start_sqlite3");
+          let conn = await sqlmanager.sqlite3.connector("mgmtdb", compname);
+          if (conn.code == 0) {
+            rule["db"] = {
+              mgmtdb: conn.data["mgmtdb"],
+            };
+          }
 
           return response;
         } catch (error) {
@@ -60,9 +71,26 @@ module.exports = (...args) => {
           return response;
         }
       };
+      lib["force_closedb"] = async (...args) => {
+        let [request, response] = args;
+        try {
+          let { session } = request;
+          let { err, fname, rule } = response;
+          if (rule.db)
+            for (let [, database] of Object.entries(rule.db)) {
+              await database.disconnect();
+            }
+
+          return response;
+        } catch (error) {
+          response.err.error = error.message;
+          return response;
+        }
+      };
+
       resolve(lib);
-    } catch (e) {
-      reject(e);
+    } catch (error) {
+      reject(error);
     }
   });
 };

@@ -43,6 +43,19 @@ success.layout = { type = "basic", pattern = "%d %p %c %X{user} %m%n" }
 workdb = { path = "", type = "memory" }
 filedb = { path = "", type = "file" }
 
+[production.mariadb]
+
+[production.mariadb.log]
+type = "dateFile"
+keepFileExt = true
+maxLogSize = "50M"
+numBackups = 10
+success.layout = { type = "basic", pattern = "%d %p %c %X{user} %m%n" }
+
+
+[production.mariadb.db]
+workdb = { path = "", port = 3306, host = "127.0.0.1", user = "root", password = "root", database = "mysql", waitForConnections = true, connectionLimit = 10, queueLimit = 0 }
+
 [debug.upload]
 disk = 5120            # 1024 * 5000 is > 5MB save to file 
 stream = 61440         # 1024 * 60000 > 60MB save as streamable
@@ -60,3 +73,16 @@ success.layout = { type = "basic", pattern = "%d %p %c %X{user} %m%n" }
 [debug.sqlite3.db]
 device = { path = "", type = "file", backup = "" }
 testfile = { path = "", type = "memory", backup = "" }
+
+[debug.mariadb]
+
+[debug.mariadb.log]
+type = "dateFile"
+keepFileExt = true
+maxLogSize = "50M"
+numBackups = 10
+success.layout = { type = "basic", pattern = "%d %p %c %X{user} %m%n" }
+
+
+[debug.mariadb.db]
+workdb = { path = "", port = 3306, host = "127.0.0.1", user = "root", password = "root", database = "mysql", waitForConnections = true, connectionLimit = 10, queueLimit = 0 }

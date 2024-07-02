@@ -207,12 +207,12 @@ module.exports = (...args) => {
         try {
           let { render, rule } = response;
 
-          let cond = rule["db"].datacenter.rules;
-          let dboption = rule["db"].datacenter.dboption;
+          let cond = rule["db"].workdb.rules;
+          let dboption = rule["db"].workdb.dboption;
           cond.transaction = true;
 
-          let isempty = await rule["db"].datacenter.ischema("testdb1");
-          let data1 = await rule["db"].datacenter.query(
+          let isempty = await rule["db"].workdb.ischema("testdb1");
+          let data1 = await rule["db"].workdb.query(
             [
               {
                 type: "INSERT",
@@ -239,7 +239,7 @@ module.exports = (...args) => {
 
           cond.transaction = false;
           cond.queryone = true;
-          let data = await rule["db"].datacenter.query(
+          let data = await rule["db"].workdb.query(
             [
               {
                 type: "SELECT",
@@ -386,12 +386,12 @@ module.exports = (...args) => {
             WHERE,
           });
 
-          let cond = rule["db"].datacenter.rules;
-          let dboption = rule["db"].datacenter.dboption;
+          let cond = rule["db"].workdb.rules;
+          let dboption = rule["db"].workdb.dboption;
           // cond.transaction = true;
 
-          let isempty = await rule["db"].datacenter.ischema("testdb");
-          let data1 = await rule["db"].datacenter.query(
+          let isempty = await rule["db"].workdb.ischema("testdb");
+          let data1 = await rule["db"].workdb.query(
             [
               {
                 type: prepare1.data.cmd,

@@ -1,7 +1,7 @@
 # OriCommJS_Components
 
 ![Static Badge](https://img.shields.io/badge/License-Mulan_PSL_v2-_)
-![Static Badge](https://img.shields.io/badge/Framework-OriCommJS_1.1.1-_)
+![Static Badge](https://img.shields.io/badge/Framework-OriCommJS_1.1.2-_)
 ![GitHub Release](https://img.shields.io/github/v/release/wkloh76/oricommjs_components)
 
 This is a user playground for users to design web servers, desktop applications, and non-GUI applications. It is a sub-framework of the OriCommJS framework and must work with OriCommJS.
