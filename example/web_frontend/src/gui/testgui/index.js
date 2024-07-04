@@ -12,7 +12,7 @@ module.exports = (...args) => {
       let {
         dir,
         components,
-        utils: { handler },
+        utils: { handler, concatobj },
       } = library;
       let { fs, path } = sys;
       let lib = handler.restfulapi;
@@ -25,12 +25,12 @@ module.exports = (...args) => {
 
       let commonviews = components[compname].common.viewspath;
 
-      let regulation = components[compname].rules.regulation.gui;      
-      regulation.none[curdir] = [
+      let regulation = components[compname].rules.regulation.gui;
+      regulation.none[curdir] = concatobj([], regulation.none[curdir], [
         "dashboard-pass",
         "dashboard-layout-pass",
         "test-json",
-      ];
+      ]);
       regulation.nostrict["r0"][curdir] = ["test-dashboard-text"];
       regulation.nostrict["r10"][curdir] = ["test-dashboard-json"];
       regulation.nostrict["r4"][curdir] = ["test-dashboard-pass"];
@@ -42,35 +42,32 @@ module.exports = (...args) => {
         try {
           let {
             render: {
-              options: { css, elcontent, js, layer, less, params },
+              options: { css, js, layer, less, params },
+              options: {
+                layer: { childs },
+              },
+              options,
             },
             render: renderer,
           } = response;
           renderer.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
-          layer.params = {
+          options.params = {
             title: "Test Graphic User Interface with rule 0",
             remotely: cdn,
             locally: `/${compname}`,
           };
-          layer.childs = {
-            path: path.join(commonviews, "sample"),
-            excluded: [
-              "head.html",
-              "header.html",
-              "prescript.html",
-              "script.html",
-            ],
-          };
-
-          params.remotely = cdn;
-          params.locally = `/${compname}`;
-          css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];
-          js.remotely = [
-            "/npm/uikit@3.18.3/dist/js/uikit.min.js",
-            "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
+          childs.path = path.join(commonviews, "sample");
+          childs.excluded = [
+            "head.html",
+            "header.html",
+            "prescript.html",
+            "script.html",
           ];
 
+          css.remotely.push("/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css");
+          js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit.min.js");
+          js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit-icons.min.js");
           less.engine.remotely = "/npm/less@4.2.0/dist/less.min.js";
           less.style.locally = ["/public/assets/less/plugin/wi.less"];
 
@@ -85,13 +82,17 @@ module.exports = (...args) => {
         try {
           let {
             render: {
-              options: { css, elcontent, js, layer, less, mjs, params },
+              options: { css, js, layer, less, params },
+              options: {
+                layer: { childs },
+              },
+              options,
             },
             render: renderer,
           } = response;
           renderer.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
-          layer.params = {
+          options.params = {
             title: "Test Graphic User Interface with rule 10",
             remotely: cdn,
             locally: `/${compname}`,
@@ -106,14 +107,17 @@ module.exports = (...args) => {
             ],
           };
 
-          params.remotely = cdn;
-          params.locally = `/${compname}`;
-          css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];
-          js.remotely = [
-            "/npm/uikit@3.18.3/dist/js/uikit.min.js",
-            "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
+          childs.path = path.join(commonviews, "sample");
+          childs.excluded = [
+            "head.html",
+            "header.html",
+            "prescript.html",
+            "script.html",
           ];
 
+          css.remotely.push("/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css");
+          js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit.min.js");
+          js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit-icons.min.js");
           less.engine.remotely = "/npm/less@4.2.0/dist/less.min.js";
           less.style.locally = ["/public/assets/less/plugin/wi.less"];
 
@@ -128,39 +132,35 @@ module.exports = (...args) => {
         try {
           let {
             render: {
-              options: { css, elcontent, js, layer, less, params },
+              options: { css, js, layer, less, params },
+              options: {
+                layer: { childs },
+              },
+              options,
             },
             render: renderer,
           } = response;
           renderer.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
-          layer.params = {
+          options.params = {
             title: "Test Graphic User Interface with rule 4",
             remotely: cdn,
             locally: `/${compname}`,
           };
-          layer.childs = {
-            path: path.join(commonviews, "sample"),
-            excluded: [
-              "head.html",
-              "header.html",
-              "prescript.html",
-              "script.html",
-            ],
-          };
 
-          params.remotely = cdn;
-          params.locally = `/${compname}`;
-          css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];
-          js.remotely = [
-            "/npm/uikit@3.18.3/dist/js/uikit.min.js",
-            "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
+          childs.path = path.join(commonviews, "sample");
+          childs.excluded = [
+            "head.html",
+            "header.html",
+            "prescript.html",
+            "script.html",
           ];
-          less.engine = {
-            domain: "remotely",
-            location: "/npm/less@4.2.0/dist/less.min.js",
-          };
-          less.style.locally = ["/public/assets/less/wi.less"];
+
+          css.remotely.push("/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css");
+          js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit.min.js");
+          js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit-icons.min.js");
+          less.engine.remotely = "/npm/less@4.2.0/dist/less.min.js";
+          less.style.locally = ["/public/assets/less/plugin/wi.less"];
 
           return response;
         } catch (error) {
@@ -173,14 +173,20 @@ module.exports = (...args) => {
         try {
           let {
             render: {
-              options: { elcontent, params },
+              options: { css, js, layer, less, params },
+              options: {
+                layer: { childs },
+              },
+              options,
             },
             render: renderer,
           } = response;
           renderer.view = `${pathname}/index1.html`;
-          elcontent.title = "Test Graphic User Interface";
-          params.remotely = cdn;
-          params.locally = `/${compname}`;
+          options.params = {
+            title: "Test Graphic User Interface",
+            remotely: cdn,
+            locally: `/${compname}`,
+          };
 
           return response;
         } catch (error) {
@@ -194,37 +200,33 @@ module.exports = (...args) => {
         try {
           let {
             render: {
-              options: { css, elcontent, js, layer, less, params },
+              options: { css, js, layer, less, params },
+              options: {
+                layer: { childs },
+              },
+              options,
             },
             render: renderer,
           } = response;
           renderer.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
-          layer.params = {
+          options.params = {
             title: "Test Graphic User Interface",
             remotely: cdn,
             locally: `/${compname}`,
           };
-          layer.childs = {
-            path: path.join(commonviews, "sample"),
-            excluded: ["header.html", "prescript.html", "script.html"],
-          };
 
-          params.remotely = cdn;
-          params.locally = `/${compname}`;
-          css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];
-          js.remotely = [
-            "/npm/uikit@3.18.3/dist/js/uikit.min.js",
-            "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
-          ];
-          mjs.locally.push("/public/assets/js/model/sample.js");
-          mjs.initialize["sample.init"] = [layer.params.title];
+          childs.path = path.join(commonviews, "sample");
+          childs.excluded = ["header.html", "prescript.html", "script.html"];
 
-          less.engine = {
-            domain: "remotely",
-            location: "/npm/less@4.2.0/dist/less.min.js",
-          };
-          less.style.locally = ["/public/assets/less/wi.less"];
+          css.remotely.push("/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css");
+          js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit.min.js");
+          js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit-icons.min.js");
+
+          js.locally.push("/public/assets/js/model/sample.js");
+          mjs.initialize["sample.init"] = [l[ayer.params.title]];
+          less.engine.remotely = "/npm/less@4.2.0/dist/less.min.js";
+          less.style.locally = ["/public/assets/less/plugin/wi.less"];
 
           return response;
         } catch (error) {
@@ -238,43 +240,34 @@ module.exports = (...args) => {
         try {
           let {
             render: {
-              options: { css, elcontent, js, layer, less, mjs, params },
+              options: { css, js, layer, less, params },
+              options: {
+                layer: { childs },
+              },
+              options,
             },
             render: renderer,
           } = response;
           renderer.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
-          layer.params = {
+          options.params = {
             title: "Test Graphic User Interface with rule 30",
             remotely: cdn,
             locally: `/${compname}`,
           };
-          layer.childs = {
-            path: path.join(commonviews, "sample"),
-            excluded: [
-              "head.html",
-              "header.html",
-              "prescript.html",
-              "script.html",
-            ],
-          };
-
-          params.remotely = cdn;
-          params.locally = `/${compname}`;
-          css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];
-          js.remotely = [
-            "/npm/uikit@3.18.3/dist/js/uikit.min.js",
-            "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
+          childs.path = path.join(commonviews, "sample");
+          childs.excluded = [
+            "head.html",
+            "header.html",
+            "prescript.html",
+            "script.html",
           ];
-          less.engine = {
-            domain: "remotely",
-            location: "/npm/less@4.2.0/dist/less.min.js",
-          };
-          less.style.locally = ["/public/assets/less/wi.less"];
 
-          mjs = {
-            jslib: JSON.stringify({}),
-          };
+          css.remotely.push("/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css");
+          js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit.min.js");
+          js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit-icons.min.js");
+          less.engine.remotely = "/npm/less@4.2.0/dist/less.min.js";
+          less.style.locally = ["/public/assets/less/plugin/wi.less"];
         } catch (error) {
           response.err.error = error.message;
           return response;
@@ -286,43 +279,34 @@ module.exports = (...args) => {
         try {
           let {
             render: {
-              options: { css, elcontent, js, layer, less, mjs, params },
+              options: { css, js, layer, less, params },
+              options: {
+                layer: { childs },
+              },
+              options,
             },
             render: renderer,
           } = response;
           renderer.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
-          layer.params = {
+          options.params = {
             title: "Test Graphic User Interface with rule 1",
             remotely: cdn,
             locally: `/${compname}`,
           };
-          layer.childs = {
-            path: path.join(commonviews, "sample"),
-            excluded: [
-              "head.html",
-              "header.html",
-              "prescript.html",
-              "script.html",
-            ],
-          };
-
-          params.remotely = cdn;
-          params.locally = `/${compname}`;
-          css.remotely = ["/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css"];
-          js.remotely = [
-            "/npm/uikit@3.18.3/dist/js/uikit.min.js",
-            "/npm/uikit@3.18.3/dist/js/uikit-icons.min.js",
+          lchilds.path = path.join(commonviews, "sample");
+          childs.excluded = [
+            "head.html",
+            "header.html",
+            "prescript.html",
+            "script.html",
           ];
-          less.engine = {
-            domain: "remotely",
-            location: "/npm/less@4.2.0/dist/less.min.js",
-          };
-          less.style.locally = ["/public/assets/less/wi.less"];
 
-          mjs = {
-            jscss: JSON.stringify({}),
-          };
+          css.remotely.push("/npm/uikit@3.18.3/dist/css/uikit-rtl.min.css");
+          js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit.min.js");
+          js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit-icons.min.js");
+          less.engine.remotely = "/npm/less@4.2.0/dist/less.min.js";
+          less.style.locally = ["/public/assets/less/plugin/wi.less"];
 
           return response;
         } catch (error) {
