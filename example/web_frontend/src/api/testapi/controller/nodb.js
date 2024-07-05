@@ -28,8 +28,8 @@ module.exports = (...args) => {
 
       let test = require(join(pathname, "model", "test"))(params, obj);
 
-      let regulation = components[compname].rules.regulation.api;
-      regulation.none[curdir] = concatobj([], regulation.none[curdir], [
+      let { none: regnone } = components[compname].rules.regulation.api;
+      regnone[curdir] = concatobj([], regnone[curdir], [
         "testjson",
         "upload",
         "test-inspect-promiss-error",

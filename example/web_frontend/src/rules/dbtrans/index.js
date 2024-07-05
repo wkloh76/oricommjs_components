@@ -58,10 +58,10 @@ module.exports = (...args) => {
           let { err, fname, rule } = response;
 
           console.log("start_sqlite3");
-          let conn = await sqlmanager.sqlite3.connector("mgmtdb", compname);
+          let conn = await sqlmanager.sqlite3.connector("device", compname);
           if (conn.code == 0) {
             rule["db"] = {
-              mgmtdb: conn.data["mgmtdb"],
+              device: conn.data["device"],
             };
           }
 

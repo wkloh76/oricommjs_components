@@ -28,20 +28,19 @@ module.exports = (...args) => {
 
       let test = require(join(pathname, "model", "test"))(params, obj);
 
-      let regulation = components[compname].rules.regulation.api;
-      regulation.strict["auth-sqlite"][curdir] = concatobj(
+      let rname = ["auth-sqlite", "permit-mariadb-strict", "basic-mariadb"];
+      let { strict: regstrict, nostrict: regnostrict } =
+        components[compname].rules.regulation.api;
+
+      regstrict[rname[0]][curdir] = concatobj([], regstrict[rname[0]][curdir], [
+        "test-sqlite",
+      ]);
+      regstrict[rname[1]][curdir] = concatobj([], regstrict[rname[1]][curdir], [
+        "test-mariadb",
+      ]);
+      regnostrict[rname[2]][curdir] = concatobj(
         [],
-        regulation.strict["auth-sqlite"][curdir],
-        ["test-sqlite"]
-      );
-      regulation.strict["permit-mariadb-strict"][curdir] = concatobj(
-        [],
-        regulation.strict["permit-mariadb-strict"][curdir],
-        ["test-mariadb"]
-      );
-      regulation.nostrict["basic-mariadb"][curdir] = concatobj(
-        [],
-        regulation.nostrict["basic-mariadb"][curdir],
+        regnostrict[rname[2]][curdir],
         ["test-sqltemplate-select"]
       );
 
