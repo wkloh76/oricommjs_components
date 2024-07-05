@@ -28,6 +28,7 @@ module.exports = (...args) => {
 
       
       let commonviews = components[compname].common.viewspath;
+      let {user} = components[compname].common.models.common;
 
       let regulation = components[compname].rules.regulation.gui;
 

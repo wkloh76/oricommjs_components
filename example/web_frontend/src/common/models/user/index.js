@@ -14,7 +14,7 @@ module.exports = (...args) => {
   // let [setting, database, dbengine] = cosetting;
   try {
     let lib = {};
-    let db = "mgmtdb";
+    let db = "device";
     lib.namelist = () => {
       return ["Albert", "Jhon"];
     };
