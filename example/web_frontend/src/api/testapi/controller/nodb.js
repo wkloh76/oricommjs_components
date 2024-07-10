@@ -36,6 +36,7 @@ module.exports = (...args) => {
         "test-promiss-error",
         "test-error",
         "test-async-error",
+        "test-utils",
       ]);
 
       POST["testjson"] = async (...args) => {
@@ -188,6 +189,84 @@ module.exports = (...args) => {
                 data: null,
               };
             }
+
+            resolve(response);
+          } catch (error) {
+            // response.err.error = error;
+            reject(error);
+          }
+        });
+      };
+
+      GET["test-utils"] = (...args) => {
+        return new Promise(async (resolve, reject) => {
+          let [request, response] = args;
+          let {
+            utils: {
+              arr_objectjson,
+              pick_arrayofobj,
+              arr_diffidx,
+              pick_arrayobj2list,
+            },
+          } = library;
+          try {
+            let { render, inspector } = response;
+
+            let getprm = handler.getprm(request);
+            render.options["json"] = handler.dataformat;
+
+            var input1 = "test";
+            var input2 = 23;
+            var input3 = [
+              {
+                key1: "value1",
+                key2: "value2",
+                key3: `{"key3.1":"value3.1"}`,
+                key4: "",
+              },
+              {
+                key1: "value1.1",
+                key2: "value2.1",
+                key3: `{"key3.1":"value3.1.1"}`,
+                key4: "",
+              },
+            ];
+            var input4 = `{"key5":"value5"}`;
+            var input5 = "";
+            var input6 = {
+              key6: "value6",
+            };
+            var input7 = [
+              {
+                location_id: 2,
+                line_id: 1,
+                device_id: null,
+                location_label: "Main PCBA Pairing",
+                settings: '{"prodorder":"52"}',
+                token:
+                  '{"unit_id":null,"token":"62a1149ca3","dt":"2022-02-15 18:31:33"}',
+                station_id: 2,
+                station_code: "mainpcb",
+                station_name: "Main PCBA Pairing",
+                task: '{"upair":[2]}',
+                input: '["uhf","barcode"]',
+                first: 1,
+              },
+            ];
+
+            render.options["json"]["data"] = {};
+            render.options["json"]["data"]["pick_arrayofobj"] = pick_arrayofobj(
+              input3,
+              ["key1", "key2"]
+            );
+
+            render.options["json"]["data"]["arr_diffidx"] = arr_diffidx(
+              ["code", "kids", "perm_json", "conn_id"],
+              ["code", "perm_json", "conn_id", "db"]
+            );
+
+            render.options["json"]["data"]["pick_arrayobj2list"] =
+              pick_arrayobj2list(input3, ["key1", "key2"]);
 
             resolve(response);
           } catch (error) {
