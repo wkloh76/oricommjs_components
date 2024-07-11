@@ -95,9 +95,15 @@ module.exports = (...args) => {
             cond
           );
 
-          if (data.code == 0)
-            for (let itm of data.data) render.options["json"].push(itm);
-          else throw data.data;
+          if (data.code == 0) {
+            for (let itm of data.data) {
+              if (itm.length < 2)
+                // https://attacomsian.com/blog/javascript-convert-array-of-objects-to-object
+                // Merge all array objects into single object
+                render.options["json"].push(Object.assign({}, ...itm));
+              else render.options["json"].push(itm);
+            }
+          } else throw data.data;
           return response;
         } catch (error) {
           return error;
