@@ -97,11 +97,19 @@ module.exports = (...args) => {
 
           if (data.code == 0) {
             for (let itm of data.data) {
-              if (itm.length < 2)
+              if (itm.length < 2) {
                 // https://attacomsian.com/blog/javascript-convert-array-of-objects-to-object
                 // Merge all array objects into single object
                 render.options["json"].push(Object.assign({}, ...itm));
-              else render.options["json"].push(itm);
+                let keycom_info_detail = Object.assign({}, ...data.data[0]);
+                if (Object.keys(keycom_info_detail).length > 0) {
+                  console.log("Get key com Info success!");
+                } else {
+                  console.log(
+                    "Get key com Info failed! Keycom record not found!"
+                  );
+                }
+              } else render.options["json"].push(itm);
             }
           } else throw data.data;
           return response;

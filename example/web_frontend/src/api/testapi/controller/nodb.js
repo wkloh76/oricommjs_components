@@ -202,9 +202,11 @@ module.exports = (...args) => {
         let [request, response] = args;
         let {
           utils: {
+            arr_selected,
             arr_objectjson,
             pick_arrayofobj,
             arr_diffidx,
+            objpick,
             pick_arrayobj2list,
           },
         } = library;
@@ -256,17 +258,106 @@ module.exports = (...args) => {
           render.options["json"]["data"] = {};
           render.options["json"]["data"]["pick_arrayofobj"] = pick_arrayofobj(
             input3,
-            ["key1", "key2"]
+            ["key1"]
           );
 
-          render.options["json"]["data"]["arr_diffidx"] = arr_diffidx(
-            ["code", "kids", "perm_json", "conn_id"],
-            ["code", "perm_json", "conn_id", "db"]
+          render.options["json"]["data"]["source"] = [
+            "code",
+            "kids",
+            "perm_json",
+            "conn_id",
+            "adult",
+          ];
+
+          render.options["json"]["data"]["compare"] = [
+            "code",
+            "perm_json",
+            "conn_id",
+            "db",
+          ];
+
+          render.options["json"]["data"]["arr_diffidx1"] = arr_diffidx(
+            ["code", "kids", "perm_json", "conn_id", "adult"],
+            ["code", "perm_json", "conn_id", "db"],
+            1
+          );
+          render.options["json"]["data"]["arr_diffidx2"] = arr_diffidx(
+            ["code", "kids", "perm_json", "conn_id", "adult"],
+            ["code", "perm_json", "conn_id", "db"],
+            2
           );
 
           render.options["json"]["data"]["pick_arrayobj2list"] =
-            pick_arrayobj2list(input3, ["key1", "key2"]);
-          
+            pick_arrayobj2list(
+              render.options["json"]["data"]["arr_diffidx1"].data,
+              ["from", "value"]
+            );
+
+          render.options["json"]["data"]["objpick"] = objpick(
+            input7[0],
+            "location_label token"
+          );
+
+          let prm = {
+            stn_id: 527,
+            name: "",
+            desc: "Gateway",
+            input: { type: "uhf", first: true, allow: [] },
+            task: { unpairsn: false },
+            first: 1,
+            stn_loc: [
+              {
+                line_code: "AQ",
+                no: 2,
+              },
+              {
+                line_code: "ML1",
+                no: 2,
+              },
+              {
+                line_code: "ML1",
+                no: 1,
+              },
+              {
+                line_code: "New",
+                no: 2,
+              },
+            ],
+          };
+
+          let same = arr_selected(Object.keys(prm), [
+            "name",
+            "desc",
+            "input",
+            "task",
+            "first",
+            "stn_id",
+          ]);
+
+          let diff = arr_diffidx(Object.keys(prm), [
+            "name",
+            "desc",
+            "input",
+            "task",
+            "first",
+            "stn_id",
+          ]);
+
+          console.log(
+            ["name"].filter((key) => !Object.keys(prm).includes(key))
+          );
+
+          console.log(diff.data);
+          // console.log(["arr", undefined, "arc", "hrc"].includes(undefined));
+          // console.log(["arr", "undefined", null, "hrc"].includes(null));
+          console.log(Object.values(prm));
+          console.log(Object.values(prm).includes(""));
+          // console.log(["arr", "undefined", "arc", "hrc"].includes(""));
+          // console.log(["arr", "undefined", "arc", "hrc"].includes(String));
+          // let yyy1 = Object.assign({}, ...[{ itm: 1 }]);
+          // let yyy2 = Object.assign({}, ...[{}]);
+          // console.log(Object.keys(yyy1).length);
+          // console.log(Object.keys(yyy2).length);
           return response;
         } catch (error) {
           response.err.error = errhandler(error);

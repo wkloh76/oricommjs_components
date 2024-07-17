@@ -20,6 +20,19 @@ module.exports = (...args) => {
       );
       let regulation = components[compname].rules.regulation.api;
       console.log(regulation);
+
+      let json = {};
+      let permission = {
+        code: false,
+        name: "Jerry",
+        city: "johor",
+        state: "senai",
+        location: "VS89",
+      };
+
+      const inclusivePick = (obj, ...keys) =>
+        Object.fromEntries(keys.map((key) => [key, obj[key]]));
+      json = inclusivePick(permission, "city", "state", "location");
       resolve(lib);
     } catch (error) {
       reject(error);

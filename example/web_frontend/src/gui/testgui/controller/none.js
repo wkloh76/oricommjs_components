@@ -1,7 +1,7 @@
 "use strict";
 /**
  * The submodule of testgui
- * @module testgui
+ * @module none
  */
 module.exports = (...args) => {
   return new Promise(async (resolve, reject) => {
