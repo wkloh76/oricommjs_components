@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Update example in startup/sqlite. Completed on 2024-06-10
+- Change public file share defination method in array type which will support multi components defination. Completed on 2024-07-22
 
 ### Deprecated
 

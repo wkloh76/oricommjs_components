@@ -187,10 +187,10 @@ module.exports = (...args) => {
 
           let comp_engine = library.engine[setting.general.engine.name];
 
-          setting.share = {};
-          setting.share[`/${compname}/public`] = join(prjsrc, "src", "public");
-          if (!setting.share[`/atomic`])
-            setting.share[`/atomic`] = join(library.dir, "atomic");
+          let share = {};
+          share[`/${compname}/public`] = join(prjsrc, "src", "public");
+          if (!share[`/atomic`]) share[`/atomic`] = join(library.dir, "atomic");
+          setting.share.push(share);
 
           components[compname] = {
             ...components[compname],

@@ -92,7 +92,7 @@ module.exports = (...args) => {
           js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit-icons.min.js");
 
           js.locally.push("/public/assets/js/model/sample.js");
-          mjs.initialize["sample.init"] = [l[ayer.params.title]];
+          mjs.initialize["sample.init"] = [[layer.params.title]];
           less.engine.remotely = "/npm/less@4.2.0/dist/less.min.js";
           less.style.locally = ["/public/assets/less/plugin/wi.less"];
 
