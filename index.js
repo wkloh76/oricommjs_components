@@ -172,7 +172,8 @@ module.exports = (...args) => {
           let [setting, mergeDeep] = args;
           let output = { code: 0, msg: "", data: null };
 
-          let tomlpath = join(prjsrc, "coresetting.toml");
+          let [compsetting] = compname.split("_");
+          let tomlpath = join(prjsrc, `${compsetting}.toml`);
 
           if (fs.existsSync(tomlpath)) {
             let psetting = toml.parse(fs.readFileSync(tomlpath), {
@@ -200,10 +201,6 @@ module.exports = (...args) => {
               [library, sys, setting]
             )),
           };
-
-          // let commmodel = library.utils.dir_module(
-          //   join(prjsrc, "src", "common", "models")
-          // );
 
           components[compname] = {
             ...components[compname],

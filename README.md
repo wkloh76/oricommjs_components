@@ -24,9 +24,9 @@ This is a user playground for users to design web servers, desktop applications,
    - `web_` for web application.
    - `desktop_` for desktop application.
 
-3. For web server design,copy [coresetting.toml.example.web][coresetting-web] file and rename to `coresetting.toml`.
+3. For web server design,copy [web.toml.example][coresetting-web] file and rename to `coresetting.toml`.
 
-4. For desktop application design,copy [coresetting.toml.example.desktop][coresetting-desktop] file and rename to `coresetting.toml`.
+4. For desktop application design,copy [desktop.toml.example][coresetting-desktop] file and rename to `coresetting.toml`.
 
 ### Start coding
 
@@ -51,5 +51,5 @@ This is a user playground for users to design web servers, desktop applications,
 OriCommJS_Components is freely distributable under the terms of the [Mulan PSL v2 license][license-url].
 
 [license-url]: License
-[coresetting-web]: coresetting.toml.example.web
-[coresetting-desktop]: coresetting.toml.example.desktop
+[coresetting-web]: web.toml.example
+[coresetting-desktop]: desktop.toml.example

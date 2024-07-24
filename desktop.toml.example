@@ -23,9 +23,6 @@ contextIsolation = true
 webSecurity = true
 enableRemoteModule = false
 show = false
-url = ""
-page = ""
-el = "localapi"
 
 [production]
 defaulturl=""
