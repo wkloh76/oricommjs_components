@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Redefine coresetting.ongoing which will independently base on it own toml file. Completed on 2024-07-24
+
 ### Changed
 
 - Change the `coresetting.toml` no longer to use for components project setting. It will base on the engine type name. Example: `web_testing`, the setting filename will be `web.toml` and `desktop_test` the setting file will be `desktop.toml`. Completed on 2024-07-24

@@ -183,7 +183,7 @@ module.exports = (...args) => {
             let { debug, production, ...settingtmp } = psetting;
             setting = mergeDeep(setting, settingtmp);
             setting[mode] = mergeDeep(setting[mode], psetting[mode]);
-            setting["ongoing"] = mergeDeep(setting["ongoing"], psetting[mode]);
+            setting["ongoing"][compname] = mergeDeep({}, psetting[mode]);
           }
 
           let comp_engine = library.engine[setting.general.engine.name];
@@ -241,15 +241,16 @@ module.exports = (...args) => {
           let dataset = {};
           dataset[compname] = components[compname];
 
-          if (!setting.ongoing.internalurl) setting.ongoing.internalurl = {};
-          setting.ongoing.internalurl[
+          if (!setting.ongoing[compname].internalurl)
+            setting.ongoing[compname].internalurl = {};
+          setting.ongoing[compname].internalurl[
             `${compname}`
           ] = `/${compname}/public/assets`;
 
-          dataset[compname].defaulturl = setting.ongoing.defaulturl;
+          dataset[compname].defaulturl = setting.ongoing[compname].defaulturl;
           comp_engine.register(dataset, compname, setting.general.engine);
 
-          let less = `@remote: "${setting.ongoing.remote.cdn}";@internal: "/${compname}/public/assets";`;
+          let less = `@remote: "${setting.ongoing[compname].remote.cdn}";@internal: "/${compname}/public/assets";`;
           fs.writeFileSync(
             join(prjsrc, "src", "public", "assets", "less", "config.less"),
             less,

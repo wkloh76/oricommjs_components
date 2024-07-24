@@ -24,7 +24,7 @@ module.exports = (...args) => {
       let { DELETE, HEAD, GET, PATCH, POST, PUT } = lib;
       let {
         remote: { cdn, apiserver, wsserver },
-      } = cosetting.ongoing;
+      } = cosetting.ongoing[compname];
 
       let test = require(join(pathname, "model", "test"))(params, obj);
 
@@ -83,7 +83,7 @@ module.exports = (...args) => {
             input.data = {
               req: request,
             };
-            let rtn = await webstorage(request, cosetting.ongoing.upload, true);
+            let rtn = await webstorage(request, cosetting.ongoing[compname].upload, true);
             if (rtn.code == 0) {
               render.options["json"] = {
                 message: rtn.data,

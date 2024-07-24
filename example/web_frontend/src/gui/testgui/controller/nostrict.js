@@ -24,7 +24,7 @@ module.exports = (...args) => {
       let { DELETE, HEAD, GET, PATCH, POST, PUT } = lib;
       let {
         remote: { cdn, apiserver, wsserver },
-      } = cosetting.ongoing;
+      } = cosetting.ongoing[compname];
 
       
       let commonviews = components[compname].common.viewspath;
