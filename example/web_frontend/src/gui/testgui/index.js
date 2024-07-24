@@ -18,7 +18,7 @@ module.exports = (...args) => {
         await require("./controller/none")(params, obj),
         await require("./controller/nostrict")(params, obj)
       );
-      let regulation = components[compname].rules.regulation.api;
+      let regulation = components[compname].rules.regulation.gui;
       console.log(regulation);
       resolve(lib);
     } catch (error) {
