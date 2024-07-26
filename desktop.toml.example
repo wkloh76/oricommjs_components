@@ -1,4 +1,12 @@
-[window]
+[deskelectronjs]
+
+[deskelectronjs.updater]
+silent = true
+cyclecheck = 3600
+delay = 5
+systemd = "user"
+
+[deskelectronjs.window]
 title = ""
 icon = "link.png"
 toolbar = true
@@ -23,6 +31,7 @@ contextIsolation = true
 webSecurity = true
 enableRemoteModule = false
 show = false
+
 
 [production]
 defaulturl=""
