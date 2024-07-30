@@ -13,11 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Redefine atomic frontend share and pulbic assets share and keeping method. Completed on 2024-07-26
+- Redefine atomic frontend share and pulbic assets share and keeping method. Completed on 2024-07-30
+- Add checkpoint, content,filepath properties to setting share for less external file in `index.js`. Completed on 2024-07-30
 
 ### Changed
 
 - Update both `desktop.toml.exmaple` and `web.toml.example` setting. Completed on 2024-07-26
+-
 
 ### Deprecated
 

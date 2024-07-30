@@ -190,9 +190,16 @@ module.exports = (...args) => {
           if (Object.keys(setting.share.atomic).length == 0)
             setting.share.atomic = join(library.dir, "atomic");
 
+          let less = `@remote: "${setting.ongoing[compname].remote.cdn}";@internal: "/${compname}/less";@internalcss: "/${compname}/public/assets";`;
+
           let share = {};
           share[`/${compname}/public`] = join(prjsrc, "src", "public");
-          share[`/${compname}/less`] = { fn: "onless" };
+          share[`/${compname}/less`] = {
+            fn: "onless",
+            checkpoint: `${compname}/less`,
+            content: less,
+            filepath: join(prjsrc, "src", "public", "assets", "less"),
+          };
           setting.share.public[compname] = share;
 
           components[compname] = {
@@ -227,7 +234,6 @@ module.exports = (...args) => {
           if (setting.general.engine.type !== "app")
             load_module = ["rules", "api", "gui"];
           else load_module = ["app"];
-          let less = `@remote: "${setting.ongoing[compname].remote.cdn}";@internal: "/${compname}/less";`;
 
           for (let item of load_module) {
             components[compname] = {
