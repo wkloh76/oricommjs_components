@@ -187,11 +187,13 @@ module.exports = (...args) => {
           }
 
           let comp_engine = library.engine[setting.general.engine.name];
+          if (Object.keys(setting.share.atomic).length == 0)
+            setting.share.atomic = join(library.dir, "atomic");
 
           let share = {};
           share[`/${compname}/public`] = join(prjsrc, "src", "public");
-          if (!share[`/atomic`]) share[`/atomic`] = join(library.dir, "atomic");
-          setting.share.push(share);
+          share[`/${compname}/less`] = { fn: "onless" };
+          setting.share.public[compname] = share;
 
           components[compname] = {
             ...components[compname],
@@ -225,6 +227,7 @@ module.exports = (...args) => {
           if (setting.general.engine.type !== "app")
             load_module = ["rules", "api", "gui"];
           else load_module = ["app"];
+          let less = `@remote: "${setting.ongoing[compname].remote.cdn}";@internal: "/${compname}/less";`;
 
           for (let item of load_module) {
             components[compname] = {
@@ -234,6 +237,14 @@ module.exports = (...args) => {
                 library.utils,
                 [library, sys, setting]
               )),
+              ...{
+                less: {
+                  [`/${compname}/less`]: {
+                    config: less,
+                    path: join(prjsrc, "src", "public", "assets", "less"),
+                  },
+                },
+              },
             };
           }
 
@@ -250,12 +261,6 @@ module.exports = (...args) => {
           dataset[compname].defaulturl = setting.ongoing[compname].defaulturl;
           comp_engine.register(dataset, compname, setting.general.engine);
 
-          let less = `@remote: "${setting.ongoing[compname].remote.cdn}";@internal: "/${compname}/public/assets";`;
-          fs.writeFileSync(
-            join(prjsrc, "src", "public", "assets", "less", "config.less"),
-            less,
-            { encoding: "utf8" }
-          );
           components.done.push(setting.general.engine);
           if (!components.start) components.start = comp_engine.start;
 

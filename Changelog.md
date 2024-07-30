@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Redefine atomic frontend share and pulbic assets share and keeping method. Completed on 2024-07-26
+
 ### Changed
 
 - Update both `desktop.toml.exmaple` and `web.toml.example` setting. Completed on 2024-07-26

@@ -90,7 +90,7 @@ module.exports = (...args) => {
           js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit.min.js");
           js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit-icons.min.js");
           less.engine.remotely = "/npm/less@4.2.0/dist/less.min.js";
-          less.style.locally = ["/public/assets/less/plugin/wi.less"];
+          less.style.locally = ["/less/plugin/wi.less"];
 
           return response;
         } catch (error) {
@@ -140,7 +140,7 @@ module.exports = (...args) => {
           js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit.min.js");
           js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit-icons.min.js");
           less.engine.remotely = "/npm/less@4.2.0/dist/less.min.js";
-          less.style.locally = ["/public/assets/less/plugin/wi.less"];
+          less.style.locally = ["/less/plugin/wi.less"];
 
           return response;
         } catch (error) {
@@ -181,7 +181,7 @@ module.exports = (...args) => {
           js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit.min.js");
           js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit-icons.min.js");
           less.engine.remotely = "/npm/less@4.2.0/dist/less.min.js";
-          less.style.locally = ["/public/assets/less/plugin/wi.less"];
+          less.style.locally = ["/less/plugin/wi.less"];
 
           return response;
         } catch (error) {
@@ -222,7 +222,7 @@ module.exports = (...args) => {
           js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit.min.js");
           js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit-icons.min.js");
           less.engine.remotely = "/npm/less@4.2.0/dist/less.min.js";
-          less.style.locally = ["/public/assets/less/plugin/wi.less"];
+          less.style.locally = ["/less/plugin/wi.less"];
         } catch (error) {
           response.err.error = error.message;
           return response;
@@ -261,7 +261,7 @@ module.exports = (...args) => {
           js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit.min.js");
           js.remotely.push("/npm/uikit@3.18.3/dist/js/uikit-icons.min.js");
           less.engine.remotely = "/npm/less@4.2.0/dist/less.min.js";
-          less.style.locally = ["/public/assets/less/plugin/wi.less"];
+          less.style.locally = ["/less/plugin/wi.less"];
 
           return response;
         } catch (error) {
