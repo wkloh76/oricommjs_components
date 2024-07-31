@@ -10,7 +10,6 @@ module.exports = (...args) => {
     const [library, sys, cosetting] = obj;
     try {
       let {
-        components,
         utils: { mergeDeep },
       } = library;
 
@@ -18,8 +17,6 @@ module.exports = (...args) => {
         await require("./controller/db")(params, obj),
         await require("./controller/nodb")(params, obj)
       );
-      let regulation = components[compname].rules.regulation.api;
-      console.log(regulation);
 
       let json = {};
       let permission = {
