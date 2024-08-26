@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Summary
 
-- Work with framework OriCommJS 1.1.4 and above.
+- Work with framework OriCommJS 1.1.6 and above.
 
 ### Added
 
@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Update both `desktop.toml.exmaple` and `web.toml.example` setting. Completed on 2024-07-26
--
+- Update example which support guimaker module in atomic/atom. Completed on 2024-08-26
 
 ### Deprecated
 
