@@ -8,7 +8,16 @@
 export default await (() => {
   let library, sys, interfaces;
   try {
-    const show = (...args) => {
+    let lib = {};
+
+    lib.load = (...args) => {
+      const [obj] = args;
+      const [kernel, sysmodule, interfacing] = obj;
+      library = kernel;
+      sys = sysmodule;
+      interfaces = interfacing;
+    };
+    lib.show = (...args) => {
       const [data] = args;
       const { utils } = library;
       const { handler } = utils;
@@ -18,25 +27,13 @@ export default await (() => {
       return output;
     };
 
-    const alert = (...args) => {
+    lib.alert = (...args) => {
       const [data] = args;
       const { utils } = library;
       const { handler } = utils;
       let output = handler.dataformat;
       alert(data);
       return output;
-    };
-
-    let lib = {
-      load: (...args) => {
-        const [obj] = args;
-        const [kernel, sysmodule, interfacing] = obj;
-        library = kernel;
-        sys = sysmodule;
-        interfaces = interfacing;
-      },
-      show,
-      alert,
     };
 
     return lib;

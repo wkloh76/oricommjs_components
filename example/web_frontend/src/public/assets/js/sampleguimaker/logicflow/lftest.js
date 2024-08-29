@@ -8,7 +8,18 @@ export default await (() => {
   let library, sys, interfaces, atom;
   return new Promise(async (resolve, reject) => {
     try {
-      const validate = (...args) => {
+      let lib = {};
+
+      lib.load = (...args) => {
+        const [obj, opt] = args;
+        const [kernel, sysmodule, interfacing] = obj;
+        library = kernel;
+        sys = sysmodule;
+        interfaces = interfacing;
+        atom = opt;
+      };
+      
+      lib.validate = (...args) => {
         const [param] = args;
         const { utils } = library;
         const { datatype, handler } = utils;
@@ -26,17 +37,6 @@ export default await (() => {
         }
       };
 
-      let lib = {
-        load: (...args) => {
-          const [obj, opt] = args;
-          const [kernel, sysmodule, interfacing] = obj;
-          library = kernel;
-          sys = sysmodule;
-          interfaces = interfacing;
-          atom = opt;
-        },
-        validate,
-      };
       resolve(lib);
     } catch (error) {
       reject(error);

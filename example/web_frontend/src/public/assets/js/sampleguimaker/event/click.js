@@ -19,12 +19,8 @@ export default await (() => {
       };
 
       lib.click_testclick = async (event) => {
-        const { utils } = library;
-        const { sanbox } = utils;
         event.preventDefault();
-        let attrs = event.currentTarget.attributes;
-        let func = attrs["func"].nodeValue;
-        if (func) await sanbox(objfuncs[func](event));
+        await helper(event);
       };
 
       resolve(lib);
