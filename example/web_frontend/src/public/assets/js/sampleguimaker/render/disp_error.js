@@ -6,11 +6,11 @@
  */
 
 export default await (() => {
-  let library, sys, interfaces, htmllogicflow, htmlrender;
+  let library, sys, interfaces;
   return new Promise(async (resolve, reject) => {
     try {
       let lib = {};
-      
+
       lib.load = (...args) => {
         const [obj] = args;
         const [kernel, sysmodule, interfacing] = obj;
