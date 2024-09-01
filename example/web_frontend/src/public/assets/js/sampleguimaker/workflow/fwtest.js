@@ -56,7 +56,7 @@ export default await (() => {
             pull: [["validate_param.detail"]],
           },
         ];
-        return [input];
+        return [[input]];
       } catch (error) {
         console.log(error);
         return;

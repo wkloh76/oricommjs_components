@@ -40,7 +40,7 @@ export default await (() => {
             func: "disp_test.alert",
           },
         ];
-        return input;
+        return [[input]];
       } catch (error) {
         console.log(error);
         return;
