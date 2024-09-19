@@ -8,27 +8,16 @@ module.exports = (...args) => {
     const [params, obj] = args;
     const [pathname, curdir, compname] = params;
     const [library, sys, cosetting] = obj;
+    const { components, utils } = library;
+    const { arr_diff, handler, webstorage, errhandler, concatobj } = utils;
+    const { path } = sys;
     try {
-      let {
-        dir,
-        components,
-        engine: { sqlmanager },
-        utils: { arr_diff, handler, webstorage, errhandler, concatobj },
-      } = library;
-      let {
-        fs,
-        path: { join },
-      } = sys;
-
       let lib = handler.restfulapi;
       let { DELETE, HEAD, GET, PATCH, POST, PUT } = lib;
-      let {
-        remote: { cdn, apiserver, wsserver },
-      } = cosetting.ongoing[compname];
+      let { cdn } = cosetting.ongoing[compname].remote;
 
-      
       let commonviews = components[compname].common.viewspath;
-      let {user} = components[compname].common.models.common;
+      let { user } = components[compname].common.models.common;
 
       let regulation = components[compname].rules.regulation.gui;
 
@@ -61,17 +50,12 @@ module.exports = (...args) => {
       GET["test-dashboard-text"] = (...args) => {
         let [request, response] = args;
         try {
-          let {
-            render: {
-              options: { css, js, layer, less, params },
-              options: {
-                layer: { childs },
-              },
-              options,
-            },
-            render: renderer,
-          } = response;
-          renderer.view = `${pathname}/index.html`;
+          let { render } = response;
+          let { options } = render;
+          let { css, js, layer, less } = options;
+          let { childs } = layer;
+
+          render.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
           options.params = {
             title: "Test Graphic User Interface with rule 0",
@@ -101,17 +85,11 @@ module.exports = (...args) => {
       GET["test-dashboard-json"] = (...args) => {
         let [request, response] = args;
         try {
-          let {
-            render: {
-              options: { css, js, layer, less, params },
-              options: {
-                layer: { childs },
-              },
-              options,
-            },
-            render: renderer,
-          } = response;
-          renderer.view = `${pathname}/index.html`;
+          let { render } = response;
+          let { options } = render;
+          let { css, js, layer, less } = options;
+          let { childs } = layer;
+          render.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
           options.params = {
             title: "Test Graphic User Interface with rule 10",
@@ -151,17 +129,11 @@ module.exports = (...args) => {
       GET["test-dashboard-pass"] = (...args) => {
         let [request, response] = args;
         try {
-          let {
-            render: {
-              options: { css, js, layer, less, params },
-              options: {
-                layer: { childs },
-              },
-              options,
-            },
-            render: renderer,
-          } = response;
-          renderer.view = `${pathname}/index.html`;
+          let { render } = response;
+          let { options } = render;
+          let { css, js, layer, less } = options;
+          let { childs } = layer;
+          render.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
           options.params = {
             title: "Test Graphic User Interface with rule 4",
@@ -193,17 +165,11 @@ module.exports = (...args) => {
       GET["test-dashboard-syserr"] = (...args) => {
         let [request, response] = args;
         try {
-          let {
-            render: {
-              options: { css, js, layer, less, params },
-              options: {
-                layer: { childs },
-              },
-              options,
-            },
-            render: renderer,
-          } = response;
-          renderer.view = `${pathname}/index.html`;
+          let { render } = response;
+          let { options } = render;
+          let { css, js, layer, less } = options;
+          let { childs } = layer;
+          render.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
           options.params = {
             title: "Test Graphic User Interface with rule 30",
@@ -232,17 +198,11 @@ module.exports = (...args) => {
       GET["dashboard"] = (...args) => {
         let [request, response] = args;
         try {
-          let {
-            render: {
-              options: { css, js, layer, less, params },
-              options: {
-                layer: { childs },
-              },
-              options,
-            },
-            render: renderer,
-          } = response;
-          renderer.view = `${pathname}/index.html`;
+          let { render } = response;
+          let { options } = render;
+          let { css, js, layer, less } = options;
+          let { childs } = layer;
+          render.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
           options.params = {
             title: "Test Graphic User Interface with rule 1",

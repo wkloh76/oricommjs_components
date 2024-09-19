@@ -12,14 +12,12 @@ module.exports = (...args) => {
     const { handler, concatobj } = utils;
     const { atom } = atomic;
     const { guimaker } = atom;
-    const { fs, path } = sys;
+    const { path } = sys;
     const { join } = path;
     try {
       let lib = handler.restfulapi;
       let { DELETE, HEAD, GET, PATCH, POST, PUT } = lib;
-      let {
-        remote: { cdn, apiserver, wsserver },
-      } = cosetting.ongoing[compname];
+      let { cdn } = cosetting.ongoing[compname].remote;
 
       let testnoapi = require(join(pathname, "model", "testgui"))(params, obj);
       let commonviews = components[compname].common.viewspath;
@@ -35,17 +33,10 @@ module.exports = (...args) => {
       GET["dashboard-pass"] = (...args) => {
         let [request, response] = args;
         try {
-          let {
-            render: {
-              options: { css, js, layer, less, params },
-              options: {
-                layer: { childs },
-              },
-              options,
-            },
-            render: renderer,
-          } = response;
-          renderer.view = `${pathname}/index1.html`;
+          let { render } = response;
+          let { options } = render;
+
+          render.view = `${pathname}/index1.html`;
           options.params = {
             title: "Test Graphic User Interface",
             remotely: cdn,
@@ -62,17 +53,12 @@ module.exports = (...args) => {
       GET["dashboard-layout-pass"] = (...args) => {
         let [request, response] = args;
         try {
-          let {
-            render: {
-              options: { css, js, layer, less, params },
-              options: {
-                layer: { childs },
-              },
-              options,
-            },
-            render: renderer,
-          } = response;
-          renderer.view = `${pathname}/index.html`;
+          let { render } = response;
+          let { options } = render;
+          let { css, js, layer, less } = options;
+          let { childs } = layer;
+
+          render.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
           options.params = {
             title: "Test Graphic User Interface",
@@ -123,17 +109,12 @@ module.exports = (...args) => {
       GET["test-webengine"] = (...args) => {
         let [request, response] = args;
         try {
-          let {
-            render: {
-              options: { css, js, layer, less, mjs, injectionjs },
-              options: {
-                layer: { childs },
-              },
-              options,
-            },
-            render: renderer,
-          } = response;
-          renderer.view = `${pathname}/index.html`;
+          let { render } = response;
+          let { options } = render;
+          let { css, js, layer, less, mjs, injectionjs } = options;
+          let { childs } = layer;
+
+          render.view = `${pathname}/index.html`;
           layer.layouts = path.join(commonviews, "sample.html");
           options.params = {
             title: "Test Graphic User Interface",
