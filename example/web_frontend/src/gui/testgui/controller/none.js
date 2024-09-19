@@ -8,18 +8,13 @@ module.exports = (...args) => {
     const [params, obj] = args;
     const [pathname, curdir, compname] = params;
     const [library, sys, cosetting] = obj;
+    const { atomic, components, dir, utils } = library;
+    const { handler, concatobj } = utils;
+    const { atom } = atomic;
+    const { guimaker } = atom;
+    const { fs, path } = sys;
+    const { join } = path;
     try {
-      let {
-        dir,
-        components,
-        engine: { sqlmanager },
-        utils: { arr_diff, handler, webstorage, errhandler, concatobj },
-      } = library;
-      let {
-        fs,
-        path: { join },
-      } = sys;
-
       let lib = handler.restfulapi;
       let { DELETE, HEAD, GET, PATCH, POST, PUT } = lib;
       let {
@@ -159,13 +154,15 @@ module.exports = (...args) => {
           less.style.locally = ["/less/plugin/wi.less"];
 
           let webengine = handler.webengine;
-          webengine.path = `/${compname}/public/assets/js/sampleguimaker/`;
+          webengine.path = `/${compname}/public/assets/js/`;
+
+          // Empty array mean select all from the folders else excluded
           webengine.load = {
-            htmlevent: ["click.js"],
-            htmlrender: ["disp_test.js"],
-            htmllogicflow: ["lftest.js", "lferror.js"],
-            htmlcollection: ["clgeneral.js"],
-            htmlworkflow: ["fwtest.js", "wfinit.js"],
+            htmlevent: { sampleguimaker: [] },
+            htmlrender: { sampleguimaker: [] },
+            htmllogicflow: { sampleguimaker: [] },
+            htmlcollection: { sampleguimaker: [] },
+            htmlworkflow: { sampleguimaker: [] },
           };
           webengine.trigger = {
             "mouse.click": {
@@ -176,6 +173,11 @@ module.exports = (...args) => {
             },
           };
           webengine.startup = "initial";
+
+          webengine.load = guimaker.grabscript(
+            [dir, `/${compname}`, `components//${compname}/src`],
+            webengine
+          );
 
           injectionjs["variables"] = {
             webengine: webengine,
