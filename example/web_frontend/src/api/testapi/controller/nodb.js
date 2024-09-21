@@ -8,23 +8,14 @@ module.exports = (...args) => {
     const [params, obj] = args;
     const [pathname, curdir, compname] = params;
     const [library, sys, cosetting] = obj;
-    try {
-      let {
-        dir,
-        components,
-        engine: { sqlmanager },
-        utils: { arr_diff, handler, webstorage, errhandler, concatobj },
-      } = library;
-      let {
-        fs,
-        path: { join },
-      } = sys;
+    const { components, utils } = library;
+    const { handler, concatobj, errhandler, webstorage } = utils;
+    const { path } = sys;
+    const { join } = path;
 
+    try {
       let lib = handler.restfulapi;
       let { DELETE, HEAD, GET, PATCH, POST, PUT } = lib;
-      let {
-        remote: { cdn, apiserver, wsserver },
-      } = cosetting.ongoing[compname];
 
       let test = require(join(pathname, "model", "test"))(params, obj);
 
@@ -83,7 +74,11 @@ module.exports = (...args) => {
             input.data = {
               req: request,
             };
-            let rtn = await webstorage(request, cosetting.ongoing[compname].upload, true);
+            let rtn = await webstorage(
+              request,
+              cosetting.ongoing[compname].upload,
+              true
+            );
             if (rtn.code == 0) {
               render.options["json"] = {
                 message: rtn.data,

@@ -156,7 +156,7 @@ module.exports = (...args) => {
           webengine.startup = "initial";
 
           webengine.load = guimaker.grabscript(
-            [dir, `/${compname}`, `components//${compname}/src`],
+            [dir, `/${compname}`, `components/${compname}/src`],
             webengine
           );
 

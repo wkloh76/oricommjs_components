@@ -9,7 +9,7 @@ module.exports = (...args) => {
     const [pathname, curdir, compname] = params;
     const [library, sys, cosetting] = obj;
     const { components, utils } = library;
-    const { arr_diff, handler, webstorage, errhandler, concatobj } = utils;
+    const { handler, concatobj } = utils;
     const { path } = sys;
     try {
       let lib = handler.restfulapi;

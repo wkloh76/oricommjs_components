@@ -8,25 +8,13 @@ module.exports = (...args) => {
     const [params, obj] = args;
     const [pathname, curdir, compname] = params;
     const [library, sys, cosetting] = obj;
-    try {
-      let {
-        dir,
-        components,
-        engine: { sqlmanager },
-        utils: { arr_diff, handler, webstorage, errhandler, concatobj },
-      } = library;
-      let {
-        fs,
-        path: { join },
-      } = sys;
+    const { components, engine, utils } = library;
+    const { handler, concatobj } = utils;
+    const { sqlmanager } = engine;
 
+    try {
       let lib = handler.restfulapi;
       let { DELETE, HEAD, GET, PATCH, POST, PUT } = lib;
-      let {
-        remote: { cdn, apiserver, wsserver },
-      } = cosetting.ongoing[compname];
-
-      let test = require(join(pathname, "model", "test"))(params, obj);
 
       let rname = ["auth-sqlite", "permit-mariadb-strict", "basic-mariadb"];
       let { strict: regstrict, nostrict: regnostrict } =
