@@ -32,6 +32,11 @@ location = "./uploads"
 defaulturl = ""
 remote = { cdn = "https://cdn.jsdelivr.net" }
 
+[debug.upload]
+disk = 5120            # 1024 * 5000 is > 5MB save to file 
+stream = 61440         # 1024 * 60000 > 60MB save as streamable
+location = "./uploads"
+
 [production.sqlite3]
 
 [production.sqlite3.log]
@@ -58,10 +63,6 @@ success.layout = { type = "basic", pattern = "%d %p %c %X{user} %m%n" }
 [production.mariadb.db]
 workdb = { path = "", port = 3306, host = "127.0.0.1", user = "root", password = "root", database = "mysql", waitForConnections = true, connectionLimit = 10, queueLimit = 0 }
 
-[debug.upload]
-disk = 5120            # 1024 * 5000 is > 5MB save to file 
-stream = 61440         # 1024 * 60000 > 60MB save as streamable
-location = "./uploads"
 
 [debug.sqlite3]
 

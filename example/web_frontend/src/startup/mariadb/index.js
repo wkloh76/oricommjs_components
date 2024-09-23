@@ -23,13 +23,10 @@ module.exports = (...args) => {
     const [params, obj] = args;
     const [pathname, curdir, compname] = params;
     const [library, sys, cosetting] = obj;
-    const {
-      fs,
-      path: { join },
-    } = sys;
-    const {
-      engine: { sqlmanager },
-    } = library;
+    const { engine } = library;
+    const { sqlmanager } = engine;
+    const { path } = sys;
+    const { join } = path;
 
     try {
       let lib = {};
@@ -41,12 +38,14 @@ module.exports = (...args) => {
         try {
           output = await sqlmanager[dbengine].createlog(
             sqlmanager,
-            setting[dbengine]
+            setting[compname][dbengine]
           );
           if (output.code == 0) {
             let err;
-            for (let [key] of Object.entries(setting[dbengine]["db"])) {
-              let { ...dbconf } = setting[dbengine]["db"][key];
+            for (let [key] of Object.entries(
+              setting[compname][dbengine]["db"]
+            )) {
+              let { ...dbconf } = setting[compname][dbengine]["db"][key];
               dbconf["engine"] = dbengine;
               output = await sqlmanager[dbengine].register(
                 dbconf,
