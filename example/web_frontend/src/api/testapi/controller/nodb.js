@@ -9,7 +9,7 @@ module.exports = (...args) => {
     const [pathname, curdir, compname] = params;
     const [library, sys, cosetting] = obj;
     const { components, utils } = library;
-    const { handler, concatobj, errhandler, webstorage } = utils;
+    const { handler, concatobj, errhandler, diskstore } = utils;
     const { path } = sys;
     const { join } = path;
 
@@ -74,10 +74,13 @@ module.exports = (...args) => {
             input.data = {
               req: request,
             };
-            let rtn = await webstorage(
+            let rtn = await diskstore(
               request,
               cosetting.ongoing[compname].upload,
-              true
+              {
+                save: true,
+                timestamp: true,
+              }
             );
             if (rtn.code == 0) {
               render.options["json"] = {
